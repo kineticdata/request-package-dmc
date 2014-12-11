@@ -1,0 +1,51 @@
+/*
+ * Define a border style property that will be applied to the review.jsp.  This
+ * is to give the review content a border to be consitent with the border around
+ * the service item form content.
+ */
+#reviewBorder {
+    border: 1px solid #A1A1A1;
+}
+
+/*
+ * We explicitly set the width to 100% to override default behavior that causes
+ * the review content to not use the full width of the page.
+ */
+#reviewContent {
+    background-color: #FFFFFF;
+    width: 100%;
+}
+/*
+ * Define style properties for the tabs that appear for each reviewable page.
+ * Note that these should have a final height of 30px for the iFrame's height to
+ * be calculated properly if this is displayed in an iFrame in a service item.
+ */
+#reviewContent #globalnav a {
+    background: #C6C6C6;
+    border: 1px solid #A1A1A1;
+    color: white;
+    line-height: 28px;
+    padding: 0 5px;
+}
+#reviewContent #globalnav a:hover {
+    background: #D2D2D2;
+}
+#reviewContent #globalnav a.selectedTab {
+    background: #88A7C3;
+    border-color: #3B6E9C;
+}
+#reviewContent #globalnav a.selectedTab:hover {
+    background: #A0B9CE;
+    border-color: #628BAF;
+}
+
+/*
+ * We explicitly set the width to 100% to override default behavior that causes
+ * the review content to not use the full width of the page.
+ */
+#reviewContent .frame#PAGE_ReviewPages {
+    width: 100%;
+}
+.questionLayer:hover {
+    background: transparent;
+}

@@ -1,0 +1,349 @@
+<%!
+    public static class Helper {
+        public static final String FORM_NAME = "KS_SRV_Helper";
+        public static final String FIELD_SURVEY_INSTANCE_ID = "700000800";
+        public static final String FIELD_CUSTOMER_SURVEY_INSTANCE_ID = "700000830";
+        public static final String FIELD_STATUS = "7";
+        public static final String FIELD_CHAR_1 = "750000001";
+        public static final String FIELD_CHAR_2 = "750000002";
+        public static final String FIELD_CHAR_3 = "750000003";
+        public static final String FIELD_CHAR_4 = "750000004";
+        public static final String FIELD_CHAR_5 = "750000005";
+        public static final String FIELD_CHAR_6 = "750000006";
+        public static final String FIELD_CHAR_7 = "750000007";
+        public static final String FIELD_CHAR_8 = "750000008";
+        public static final String FIELD_CHAR_9 = "750000009";
+        public static final String FIELD_CHAR_10 = "750000010";
+        public static final String FIELD_CHAR_11 = "750000011";
+        public static final String FIELD_CHAR_12 = "750000012";
+        public static final String FIELD_CHAR_13 = "750000013";
+        public static final String FIELD_CHAR_14 = "750000014";
+        public static final String FIELD_DATE_1 = "750000101";
+        public static final String FIELD_DATE_2 = "750000102";
+        public static final String FIELD_DATE_3 = "750000103";
+        public static final String FIELD_DATE_4 = "750000104";
+        public static final String FIELD_DATE_5 = "750000105";
+        public static final String FIELD_DATE_6 = "750000106";
+        public static final String FIELD_DATE_7 = "750000107";
+        public static final String FIELD_DTIME_1 = "750000201";
+        public static final String FIELD_DTIME_2 = "750000202";
+        public static final String FIELD_DTIME_3 = "750000203";
+        public static final String FIELD_DTIME_4 = "750000204";
+        public static final String FIELD_DTIME_5 = "750000205";
+        public static final String FIELD_DTIME_6 = "750000206";
+        public static final String FIELD_DTIME_7 = "750000207";
+        public static final String FIELD_TIME_1 = "750000301";
+        public static final String FIELD_TIME_2 = "750000302";
+        public static final String FIELD_TIME_3 = "750000303";
+        public static final String FIELD_TIME_4 = "750000304";
+        public static final String FIELD_TIME_5 = "750000305";
+        public static final String FIELD_TIME_6 = "750000306";
+        public static final String FIELD_TIME_7 = "750000307";
+        public static final String FIELD_DISP_1 = "750000401";
+        public static final String FIELD_DISP_2 = "750000402";
+        public static final String FIELD_DISP_3 = "750000403";
+        public static final String FIELD_DISP_4 = "750000404";
+        public static final String FIELD_DISP_5 = "750000405";
+        public static final String FIELD_DISP_6 = "750000406";
+        public static final String FIELD_INT_1 = "750000501";
+        public static final String FIELD_INT_2 = "750000502";
+        public static final String FIELD_INT_3 = "750000503";
+        public static final String FIELD_INT_4 = "750000504";
+        public static final String FIELD_INT_5 = "750000505";
+        public static final String FIELD_INT_6 = "750000506";
+        public static final String FIELD_INDEX_1 = "750000601";
+        public static final String FIELD_INDEX_2 = "750000602";
+        public static final String FIELD_INDEX_3 = "750000603";
+        public static final String FIELD_REQUEST_ID = "1";
+		public static final String FIELD_PERMISSION = "112";
+        public static final String FIELD_INSTANCE_ID = "179";
+
+
+        public static final String[] FIELD_IDS = new String[] {
+        	FIELD_SURVEY_INSTANCE_ID, FIELD_CUSTOMER_SURVEY_INSTANCE_ID, FIELD_STATUS, FIELD_CHAR_1, FIELD_CHAR_2, FIELD_CHAR_3, 
+            FIELD_CHAR_4, FIELD_CHAR_5, FIELD_CHAR_6, FIELD_CHAR_7, FIELD_CHAR_8, FIELD_CHAR_9, FIELD_CHAR_10, FIELD_CHAR_11, 
+            FIELD_CHAR_12, FIELD_CHAR_13, FIELD_CHAR_14, FIELD_DATE_1, FIELD_DATE_2, FIELD_DATE_3, FIELD_DATE_4, FIELD_DATE_5, 
+            FIELD_DATE_6, FIELD_DATE_7, FIELD_DTIME_1, FIELD_DTIME_2, FIELD_DTIME_3, FIELD_DTIME_4, FIELD_DTIME_5, FIELD_DTIME_6, 
+            FIELD_DTIME_7, FIELD_TIME_1, FIELD_TIME_2, FIELD_TIME_3, FIELD_TIME_4, FIELD_TIME_5, FIELD_TIME_6, FIELD_TIME_7, FIELD_DISP_1,
+            FIELD_DISP_2, FIELD_DISP_3, FIELD_DISP_4, FIELD_DISP_5, FIELD_DISP_6, FIELD_INT_1, FIELD_INT_2, FIELD_INT_3, FIELD_INT_4,
+            FIELD_INT_5, FIELD_INT_6, FIELD_INDEX_1, FIELD_INDEX_2, FIELD_INDEX_3, FIELD_REQUEST_ID, FIELD_INSTANCE_ID, FIELD_PERMISSION
+        };
+
+        public static Helper[] find(HelperContext context, String qualification) {
+        	Helper[] results = new Helper[0];
+
+            SimpleEntry[] entries = ArsBase.find(context, FORM_NAME, qualification, FIELD_IDS);
+            if (entries != null && entries.length > 0) {
+                results = new Helper[entries.length];
+                for(int i=0;i<results.length;i++) {
+                    results[i] = new Helper(entries[i]);
+                }
+            }
+
+            return results;
+
+        }
+
+        
+        public static Helper[] find(HelperContext context, String qualification, String[] sortFields, Integer chunkSize, Integer recordOffset, Integer sortOrder) {
+            Helper[] results = new Helper[0];
+            SimpleEntry[] entries = ArsBase.find(context, FORM_NAME, qualification, FIELD_IDS, sortFields, chunkSize, recordOffset, sortOrder);
+            if (entries != null && entries.length > 0) {
+                results = new Helper[entries.length];
+                for(int i=0;i<results.length;i++) {
+                    results[i] = new Helper(entries[i]);
+                }
+            }
+
+            return results;
+        }
+
+
+        public static Helper findSingle(HelperContext context, String qualification) {
+            SimpleEntry entry = ArsBase.findSingle(context, FORM_NAME, qualification, FIELD_IDS);
+        	Helper result = new Helper(entry);
+
+            return result;
+
+        }
+
+
+        public static String createHelper(HelperContext context, String char_1, String char_2, String char_3, String char_4, String char_5, 
+            String char_6, String char_7, String char_8, String char_9, String char_10, String char_11, String char_12, String char_13, 
+            String char_14, String date_1, String date_2, String date_3, String date_4, String date_5, String date_6, String date_7, 
+            String dtime_1, String dtime_2, String dtime_3, String dtime_4, String dtime_5, String dtime_6, String dtime_7, String time_1, 
+            String time_2, String time_3, String time_4, String time_5, String time_6, String time_7, String disp_1, String disp_2, 
+            String disp_3, String disp_4, String disp_5, String disp_6, String int_1, String int_2, String int_3, String int_4, String int_5, 
+            String int_6, String index_1, String index_2, String index_3, String survey_instance_id, String customer_survey_instance_id, 
+			String permission, String status) {
+            
+            SimpleEntry entrySave = new SimpleEntry();
+            entrySave.setSchemaName(FORM_NAME);
+            entrySave.setEntryItems(new Hashtable());
+            entrySave.setEntryFieldValue(FIELD_CHAR_1, char_1);
+            entrySave.setEntryFieldValue(FIELD_CHAR_2, char_2);
+            entrySave.setEntryFieldValue(FIELD_CHAR_3, char_3);
+            entrySave.setEntryFieldValue(FIELD_CHAR_4, char_4);         
+            entrySave.setEntryFieldValue(FIELD_CHAR_5, char_5);
+            entrySave.setEntryFieldValue(FIELD_CHAR_6, char_6);
+            entrySave.setEntryFieldValue(FIELD_CHAR_7, char_7);
+            entrySave.setEntryFieldValue(FIELD_CHAR_8, char_8);
+            entrySave.setEntryFieldValue(FIELD_CHAR_9, char_9);
+            entrySave.setEntryFieldValue(FIELD_CHAR_10, char_10);
+            entrySave.setEntryFieldValue(FIELD_CHAR_11, char_11);
+            entrySave.setEntryFieldValue(FIELD_CHAR_12, char_12);
+            entrySave.setEntryFieldValue(FIELD_CHAR_13, char_13);
+            entrySave.setEntryFieldValue(FIELD_CHAR_14, char_14);
+            entrySave.setEntryFieldValue(FIELD_DATE_1, date_1);
+            entrySave.setEntryFieldValue(FIELD_DATE_2, date_2);
+            entrySave.setEntryFieldValue(FIELD_DATE_3, date_3);
+            entrySave.setEntryFieldValue(FIELD_DATE_4, date_4);
+            entrySave.setEntryFieldValue(FIELD_DATE_5, date_5);
+            entrySave.setEntryFieldValue(FIELD_DATE_6, date_6);
+            entrySave.setEntryFieldValue(FIELD_DATE_7, date_7);
+            entrySave.setEntryFieldValue(FIELD_DTIME_1, dtime_1);
+            entrySave.setEntryFieldValue(FIELD_DTIME_2, dtime_2);
+            entrySave.setEntryFieldValue(FIELD_DTIME_3, dtime_3);
+            entrySave.setEntryFieldValue(FIELD_DTIME_4, dtime_4);
+            entrySave.setEntryFieldValue(FIELD_DTIME_5, dtime_5);
+            entrySave.setEntryFieldValue(FIELD_DTIME_6, dtime_6);
+            entrySave.setEntryFieldValue(FIELD_DTIME_7, dtime_7);
+            entrySave.setEntryFieldValue(FIELD_TIME_1, time_1);
+            entrySave.setEntryFieldValue(FIELD_TIME_2, time_2);
+            entrySave.setEntryFieldValue(FIELD_TIME_3, time_3);
+            entrySave.setEntryFieldValue(FIELD_TIME_4, time_4);
+            entrySave.setEntryFieldValue(FIELD_TIME_5, time_5);
+            entrySave.setEntryFieldValue(FIELD_TIME_6, time_6);
+            entrySave.setEntryFieldValue(FIELD_TIME_7, time_7);
+            entrySave.setEntryFieldValue(FIELD_DISP_1, disp_1);
+            entrySave.setEntryFieldValue(FIELD_DISP_2, disp_2);
+            entrySave.setEntryFieldValue(FIELD_DISP_3, disp_3);
+            entrySave.setEntryFieldValue(FIELD_DISP_4, disp_4);
+            entrySave.setEntryFieldValue(FIELD_DISP_5, disp_5);
+            entrySave.setEntryFieldValue(FIELD_DISP_6, disp_6);
+            entrySave.setEntryFieldValue(FIELD_INT_1, int_1);
+            entrySave.setEntryFieldValue(FIELD_INT_2, int_2);
+            entrySave.setEntryFieldValue(FIELD_INT_3, int_3);
+            entrySave.setEntryFieldValue(FIELD_INT_4, int_4);
+            entrySave.setEntryFieldValue(FIELD_INT_5, int_5);
+            entrySave.setEntryFieldValue(FIELD_INT_6, int_6);
+            entrySave.setEntryFieldValue(FIELD_INDEX_1, index_1);
+            entrySave.setEntryFieldValue(FIELD_INDEX_2, index_2);
+            entrySave.setEntryFieldValue(FIELD_INDEX_3, index_3);
+            entrySave.setEntryFieldValue(FIELD_SURVEY_INSTANCE_ID, survey_instance_id);
+            entrySave.setEntryFieldValue(FIELD_CUSTOMER_SURVEY_INSTANCE_ID, customer_survey_instance_id);
+			entrySave.setEntryFieldValue(FIELD_PERMISSION, permission);
+			entrySave.setEntryFieldValue(FIELD_STATUS, status);  
+	
+			System.out.println("Permission: "+permission);
+            // Build the helper
+            ArsHelper helper = null;
+            try {
+                helper = new ArsHelper(context, FORM_NAME);
+            } catch (Exception e) {
+                throw new RuntimeException("Unable to initialize an ArsHelper instance.", e);
+            }
+            String createdRecordId = null;
+            try {
+                createdRecordId = helper.doSetSimpleEntry(entrySave, true);
+            } catch (Exception e) {
+                throw new RuntimeException("There was a problem saving the "+FORM_NAME+" record.", e);
+            }
+            return createdRecordId;
+       }
+
+
+
+        public static String updateHelper(HelperContext context, String helperID, String char_1, String char_2, String char_3, String char_4, 
+            String char_5, String char_6, String char_7, String char_8, String char_9, String char_10, String char_11, String char_12, 
+            String char_13, String char_14, String date_1, String date_2, String date_3, String date_4, String date_5, String date_6, 
+            String date_7, String dtime_1, String dtime_2, String dtime_3, String dtime_4, String dtime_5, String dtime_6, String dtime_7, 
+            String time_1, String time_2, String time_3, String time_4, String time_5, String time_6, String time_7, String disp_1, String disp_2, 
+            String disp_3, String disp_4, String disp_5, String disp_6, String int_1, String int_2, String int_3, String int_4, String int_5, 
+            String int_6, String index_1, String index_2, String index_3, String survey_instance_id, String customer_survey_instance_id) {
+
+            SimpleEntry entrySave = new SimpleEntry();
+            entrySave.setSchemaName(FORM_NAME);
+            entrySave.setEntryItems(new Hashtable());
+            entrySave.setEntryId(helperID);
+            entrySave.setEntryFieldValue(FIELD_CHAR_1, char_1);
+            entrySave.setEntryFieldValue(FIELD_CHAR_2, char_2);         
+            entrySave.setEntryFieldValue(FIELD_CHAR_3, char_3);
+            entrySave.setEntryFieldValue(FIELD_CHAR_4, char_4);
+            entrySave.setEntryFieldValue(FIELD_CHAR_5, char_5);
+            entrySave.setEntryFieldValue(FIELD_CHAR_6, char_6);
+            entrySave.setEntryFieldValue(FIELD_CHAR_7, char_7);
+            entrySave.setEntryFieldValue(FIELD_CHAR_8, char_8);
+            entrySave.setEntryFieldValue(FIELD_CHAR_9, char_9);
+            entrySave.setEntryFieldValue(FIELD_CHAR_10, char_10);
+            entrySave.setEntryFieldValue(FIELD_CHAR_11, char_11);
+            entrySave.setEntryFieldValue(FIELD_CHAR_12, char_12);
+            entrySave.setEntryFieldValue(FIELD_CHAR_13, char_13);
+            entrySave.setEntryFieldValue(FIELD_CHAR_14, char_14);
+            entrySave.setEntryFieldValue(FIELD_DATE_1, date_1);
+            entrySave.setEntryFieldValue(FIELD_DATE_2, date_2);
+            entrySave.setEntryFieldValue(FIELD_DATE_3, date_3);
+            entrySave.setEntryFieldValue(FIELD_DATE_4, date_4);
+            entrySave.setEntryFieldValue(FIELD_DATE_5, date_5);
+            entrySave.setEntryFieldValue(FIELD_DATE_6, date_6);
+            entrySave.setEntryFieldValue(FIELD_DATE_7, date_7);
+            entrySave.setEntryFieldValue(FIELD_DTIME_1, dtime_1);
+            entrySave.setEntryFieldValue(FIELD_DTIME_2, dtime_2);
+            entrySave.setEntryFieldValue(FIELD_DTIME_3, dtime_3);
+            entrySave.setEntryFieldValue(FIELD_DTIME_4, dtime_4);
+            entrySave.setEntryFieldValue(FIELD_DTIME_5, dtime_5);
+            entrySave.setEntryFieldValue(FIELD_DTIME_6, dtime_6);
+            entrySave.setEntryFieldValue(FIELD_DTIME_7, dtime_7);
+            entrySave.setEntryFieldValue(FIELD_TIME_1, time_1);
+            entrySave.setEntryFieldValue(FIELD_TIME_2, time_2);
+            entrySave.setEntryFieldValue(FIELD_TIME_3, time_3);
+            entrySave.setEntryFieldValue(FIELD_TIME_4, time_4);
+            entrySave.setEntryFieldValue(FIELD_TIME_5, time_5);
+            entrySave.setEntryFieldValue(FIELD_TIME_6, time_6);
+            entrySave.setEntryFieldValue(FIELD_TIME_7, time_7);
+            entrySave.setEntryFieldValue(FIELD_DISP_1, disp_1);
+            entrySave.setEntryFieldValue(FIELD_DISP_2, disp_2);
+            entrySave.setEntryFieldValue(FIELD_DISP_3, disp_3);
+            entrySave.setEntryFieldValue(FIELD_DISP_4, disp_4);
+            entrySave.setEntryFieldValue(FIELD_DISP_5, disp_5);
+            entrySave.setEntryFieldValue(FIELD_DISP_6, disp_6);
+            entrySave.setEntryFieldValue(FIELD_INT_1, int_1);
+            entrySave.setEntryFieldValue(FIELD_INT_2, int_2);
+            entrySave.setEntryFieldValue(FIELD_INT_3, int_3);
+            entrySave.setEntryFieldValue(FIELD_INT_4, int_4);
+            entrySave.setEntryFieldValue(FIELD_INT_5, int_5);
+            entrySave.setEntryFieldValue(FIELD_INT_6, int_6);
+            entrySave.setEntryFieldValue(FIELD_INDEX_1, index_1);
+            entrySave.setEntryFieldValue(FIELD_INDEX_2, index_2);
+            entrySave.setEntryFieldValue(FIELD_INDEX_3, index_3);
+            entrySave.setEntryFieldValue(FIELD_SURVEY_INSTANCE_ID, survey_instance_id);
+            entrySave.setEntryFieldValue(FIELD_CUSTOMER_SURVEY_INSTANCE_ID, customer_survey_instance_id);
+
+	
+            // Build the helper
+            ArsHelper helper = null;
+            try {
+                helper = new ArsHelper(context, FORM_NAME);
+            } catch (Exception e) {
+                throw new RuntimeException("Unable to initialize an ArsHelper instance.", e);
+            }
+
+            String updatedRecordId = null;
+
+            try {
+	            updatedRecordId = helper.doSetSimpleEntry(entrySave, true);
+            } catch (Exception e) {
+                throw new RuntimeException("There was a problem saving the "+FORM_NAME+" record.", e);
+            }
+
+            return updatedRecordId;
+       }
+
+
+
+        public static String updateStatus(HelperContext context, String helperID, String status) {
+ 
+            // Update the Helper record with new Status
+            SimpleEntry entrySave = new SimpleEntry();
+            entrySave.setEntryId(helperID);
+            entrySave.setSchemaName(FORM_NAME);
+            entrySave.setEntryItems(new Hashtable());
+            entrySave.setEntryFieldValue(FIELD_STATUS, status);                     
+            
+            // Build the helper
+            ArsHelper helper = null;
+            try {
+                helper = new ArsHelper(context, FORM_NAME);
+            } catch (Exception e) {
+                throw new RuntimeException("Unable to initialize an ArsHelper instance.", e);
+            }
+
+            String updatedRecordId = null;
+
+            try {
+                updatedRecordId = helper.doSetSimpleEntry(entrySave, true);
+            } catch (Exception e) {
+                throw new RuntimeException("There was a problem saving the "+FORM_NAME+" record.", e);
+            }
+
+            return updatedRecordId;
+        }
+		
+		public static String updatePermission(HelperContext context, String helperID, String permission) {
+ 
+            // Update the Helper record with new Status
+            SimpleEntry entrySave = new SimpleEntry();
+            entrySave.setEntryId(helperID);
+            entrySave.setSchemaName(FORM_NAME);
+            entrySave.setEntryItems(new Hashtable());
+            entrySave.setEntryFieldValue(FIELD_PERMISSION, permission);                     
+            
+            // Build the helper
+            ArsHelper helper = null;
+            try {
+                helper = new ArsHelper(context, FORM_NAME);
+            } catch (Exception e) {
+                throw new RuntimeException("Unable to initialize an ArsHelper instance.", e);
+            }
+
+            String updatedRecordId = null;
+
+            try {
+                updatedRecordId = helper.doSetSimpleEntry(entrySave, true);
+            } catch (Exception e) {
+                throw new RuntimeException("There was a problem saving the "+FORM_NAME+" record.", e);
+            }
+
+            return updatedRecordId;
+        }
+
+
+        private SimpleEntry entry = null;
+
+        public Helper(SimpleEntry entry) {
+            this.entry = entry;
+        }
+
+        public String getRequestID() {return entry.getEntryFieldValue(FIELD_REQUEST_ID);}
+    }
+%>

@@ -1,0 +1,47 @@
+#contentBody {
+    text-align: center;
+}
+#contentBody #loginBox {
+    background-color: #FFFFFF;
+    border: 1px solid #3B6E9C;
+    height: 250px;
+    margin: 100px auto;
+    text-align: left;
+    width: 500px;
+}
+#contentBody #loginBox #loginForm {
+    margin: 50px 0 0 25px;
+}
+#contentBody #loginBox #loginForm .field {
+    margin-top: 10px;
+}
+#contentBody #loginBox #loginForm .field .label {
+    color: #333333;
+    float: left;
+    font-weight: bold;
+    width: 150px;
+}
+#contentBody #loginBox #loginForm .field .value {
+    margin-left: 150px;
+}
+#contentBody #loginBox #loginForm #loginFormFooter {
+    margin-top: 10px;
+}
+#contentBody #loginBox .message {
+    color: #FF0000;
+    padding: 5px;
+}
+#contentBody #loginBox .title {
+    background-color: #88A7C3;
+    border-bottom: 1px solid #3B6E9C;
+    color: #FFFFFF;
+    font-weight: bold;
+    line-height: 26px;
+    padding: 0 5px;
+}
+#contentBody #loginBox:hover .title {
+    background-color: #A0B9CE;
+}
+#contentHeader .userInfo {
+    display: none;
+}

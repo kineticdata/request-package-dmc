@@ -1,0 +1,173 @@
+input {
+    margin: 0;
+    padding: 0;
+}
+select {
+    margin: 0;
+    padding: 0;
+}
+
+table.kd-table {
+    border: 1px solid #3B6E9C;
+    border-collapse: collapse;
+    margin: 10px 0;
+    width: 100%;
+}
+table.kd-table th, table.kd-table td {
+    border: 1px solid #3B6E9C;
+    padding: 3px;
+}
+table.kd-table th {
+    background-color: #88A7C3;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+table.kd-table th:hover {
+    background-color: #A0B9CE;
+}
+table.kd-table tr {
+    background: #E9E9E9;
+}
+table.kd-table tr.kd-odd {
+    background: #F9F9F9;
+}
+table.kd-table tr:hover {
+    background: #A0B9CE;
+    color: white;
+}
+table.kd-table tr:hover a {
+    color: white;
+}
+table.kd-table tr:hover a:hover {
+    text-decoration: underline;
+}
+
+.controls {
+    float: right;
+}
+.control {
+    float: left;
+    margin-left: 10px;
+}
+.control.button {
+    background-color: #C6C6C6;
+    border: 1px solid #A1A1A1;
+    cursor: pointer;
+    padding: 1px;
+}
+.control.button:hover {
+    background-color: #D2D2D2;
+}
+.control.summary {
+}
+.control:hover {
+}
+.control img {
+    display: block;
+}
+.control.pageNumber input {
+    text-align: center;
+    width: 30px;
+}
+
+.navigation {
+    width: 940px; /* width of the image */
+}
+.navigationItem {
+    color: #3B6E9C;
+    cursor: pointer;
+    float: left;
+    font-size: 15px;
+    font-weight: bold;
+    margin-right: 5px;
+    padding: 10px;
+}
+.navigationItem:hover {
+    background-color: #E6E6E6;
+}
+.navigationItem.active {
+    background-color: #D2D2D2;
+}
+.content {
+    background-color: #D2D2D2;
+    padding: 10px;
+}
+
+.switches {
+    float: left;
+}
+.switch {
+    background-color: #C6C6C6;
+    border: 1px solid #A1A1A1;
+    color: #FFFFFF;
+    cursor: pointer;
+    float: left;
+    font-weight: bold;
+    line-height: 16px;
+    margin-right: 10px;
+    padding: 2px;
+    text-align: center;
+    width: 100px;
+
+}
+.switch:hover {
+    background-color: #D2D2D2;
+}
+.switch.active {
+    background-color: #88A7C3;
+    border: 1px solid #3B6E9C;
+}
+.switch.active:hover {
+    background-color: #A0B9CE;
+}
+
+.submissionDetails {
+    background-color: #FFFFFF;
+    padding: 5px;
+    overflow-y: scroll;
+}
+.submissionDetails .header {
+    background-color: #A1A1A1;
+    color: white;
+    font-size: 1.1em;
+    padding: 5px;
+}
+.submissionDetails .header a {
+    color: white;
+}
+.submissionDetails .header a:hover {
+    text-decoration: underline;
+}
+.submissionDetails .header .serviceItem {
+    margin-right: 150px;
+}
+.submissionDetails .header .requestId {
+    float: right;
+    text-align: right;
+    width: 150px;
+}
+.submissionDetails .info {
+    padding: 5px;
+}
+.submissionDetails .cancel {
+    text-align: right;
+}
+.submissionDetails .label {
+    float: left;
+    font-weight: bold;
+    width: 150px;
+}
+.submissionDetails .value {
+    margin-left: 150px;
+}
+.submissionDetails .tasks .task {
+    border: 1px solid #C8C8C8;
+    margin-top: 5px;
+    padding: 5px;
+}
+.submissionDetails .tasks .task.odd {
+    background-color: #E9E9E9;
+}
+.submissionDetails .tasks .task.even {
+    background-color: #F9F9F9;
+}

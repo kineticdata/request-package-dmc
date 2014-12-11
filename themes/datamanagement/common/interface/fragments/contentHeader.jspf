@@ -1,0 +1,14 @@
+<div id="contentHeader">
+    <a href="<%= bundle.getProperty("homeUrl")%>">
+        <img alt="<%= bundle.getProperty("companyName")%>" class="logo" src="<%= bundle.bundlePath()%>common/resources/images/logo.png"></img>
+    </a>
+    <% if (context != null) {%>
+    <div class="userInfo">
+        logged in as <a href="javascript:void(0)"><%= context.getUserName()%></a> | 
+        <a href="<%= bundle.getProperty("logoutUrl")%>">logout</a>
+    </div>
+    <% } else {%>
+    <div class="userInfo">not logged in | <a href="<%= bundle.getProperty("loginUrl")%>">login</a></div>
+    <% }%>
+    <div class="clear"></div>
+</div>

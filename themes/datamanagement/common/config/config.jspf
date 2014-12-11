@@ -1,0 +1,24 @@
+<%--
+    TODO: Document PACKAGE/common/config/config.jspf
+
+    NOTE: This file is required.
+--%>
+<%
+    bundle.setProperty("companyName", "Kinetic Data");
+    bundle.setProperty("catalogName", "Kinetic Events");
+
+    bundle.setProperty("homeUrl", bundle.applicationPath() + "DisplayPage?name=KineticEventsPortal");
+    bundle.setProperty("loginUrl", bundle.applicationPath() + "DisplayPage?name=KineticEventsLogin");
+    bundle.setProperty("logoutUrl", "KSAuthenticationServlet?Logout=true");
+
+    if (context != null) {
+        bundle.setProperty("RequestsParked",     "'ApplicationName'=\"Kinetic Request\" AND 'Category'=\""+bundle.getProperty("catalogName")+"\" AND 'Status'=\"In Progress\" AND 'Request_Status'=\"Open\" AND 'Submit Type'=$NULL$ AND 'Submitter'=\""+context.getUserName()+"\"");
+        bundle.setProperty("RequestsOpen",       "'ApplicationName'=\"Kinetic Request\" AND 'Category'=\""+bundle.getProperty("catalogName")+"\" AND 'Status'=\"Completed\" AND 'Request_Status'=\"Open\" AND 'Submit Type'=$NULL$ AND 'Submitter'=\""+context.getUserName()+"\"");
+        bundle.setProperty("RequestsClosed",     "'ApplicationName'=\"Kinetic Request\" AND 'Category'=\""+bundle.getProperty("catalogName")+"\" AND 'Request_Status'=\"Closed\" AND 'Submit Type'=$NULL$ AND 'Submitter'=\""+context.getUserName()+"\"");
+        bundle.setProperty("ApprovalsPending",   "'ApplicationName'=\"Kinetic Request\" AND 'Category'=\""+bundle.getProperty("catalogName")+"\" AND 'Request_Status'=\"Open\" AND 'Submit Type'=\"Approval\" AND 'Submitter'=\""+context.getUserName()+"\"");
+        bundle.setProperty("ApprovalsCompleted", "'ApplicationName'=\"Kinetic Request\" AND 'Category'=\""+bundle.getProperty("catalogName")+"\" AND 'Request_Status'=\"Closed\" AND 'Submit Type'=\"Approval\" AND 'Submitter'=\""+context.getUserName()+"\"");
+    }
+
+    // This is a path to the review jsp to be used by review request.
+    bundle.setProperty("reviewJsp", bundle.relativeBundlePath() + "packages/base/review.jsp");
+%>

@@ -1,0 +1,10 @@
+/* /packages/datamanagement/resources/css/display.css has default CSS for this package pages. Overrides/unique values here */
+
+/*
+.questionLabel {
+	width: 206px;
+}
+*/
+.questionAnswer {
+	margin-left: 206px;
+}

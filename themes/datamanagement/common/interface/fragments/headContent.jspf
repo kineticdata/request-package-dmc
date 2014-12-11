@@ -1,0 +1,61 @@
+<!-- Common Head Content -->
+<%-- 
+    Specify that modern IE versions should render the page with their own 
+    rendering engine (as opposed to falling back to compatibility mode.
+--%>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+<%--
+    Set the "Favicon" for the site.  Most modern browswers will associate this
+    image with any bookmarks to the site, display the icon in tabs that are
+    rendering the site, and may also display it in the URL bar.
+--%>
+<link rel="shortcut icon" href="<%=bundle.bundlePath()%>common/resources/images/favicon.png" type="image/x-icon">
+
+<%--
+    Load the common bundle styling.  This will typically be loaded in the HEAD
+    element before any package specific CSS, so it may be overriden with package
+    specific styles.
+--%>
+<link rel="stylesheet" type="text/css" href="<%=bundle.bundlePath()%>common/resources/css/normalize.css" />
+<link rel="stylesheet" type="text/css" href="<%=bundle.bundlePath()%>common/resources/css/common.css" />
+<link rel="stylesheet" type="text/css" href="<%=bundle.bundlePath()%>common/resources/css/dialog.css" />
+<link rel="stylesheet" type="text/css" href="<%=bundle.bundlePath()%>common/resources/css/ajaxLogin.css" />
+<!--[if IE 6]><link rel="stylesheet" type="text/css" href="<%=bundle.bundlePath()%>common/resources/css/common.ie6.css" /><![endif]-->
+<!--[if IE 7]><link rel="stylesheet" type="text/css" href="<%=bundle.bundlePath()%>common/resources/css/common.ie7.css" /><![endif]-->
+
+<%-- 
+    Initialize the BUNDLE javascript object.  This object is used to store the
+    configuration properties for requests in a manner that the client browser
+    can access them after the initial page request has been made.
+--%>
+<!-- Configure the BUNDLE object and store the necessary configuration/state.-->
+<script type="text/javascript">
+    // Initialize the BUNDLE object.
+    var BUNDLE = {};
+    // Set the BUNDLE path properties
+    BUNDLE.applicationPath = '<%=bundle.applicationPath()%>';
+    BUNDLE.bundlePath = '<%=bundle.bundlePath()%>';
+    BUNDLE.packagePath = '<%=bundle.packagePath()%>';
+    BUNDLE.relativeBundlePath = '<%=bundle.relativeBundlePath()%>';
+    BUNDLE.relativePackagePath = '<%=bundle.relativePackagePath()%>';
+    // Initialize the BUNDLE configuration hash.
+    BUNDLE.config = {};
+    // Set all of the bundle configuration properties
+    <% for (String name : bundle.propertyNames()) {%>
+        BUNDLE.config['<%=name%>'] = '<%=bundle.getProperty(name).replaceAll("'", "\\\\'")%>';
+    <% }%>
+    // Set any additional BUNDLE properties
+    BUNDLE.config.user = '<%= (context == null) ? "" : context.getUserName()%>';
+
+</script>
+
+<%--
+    Load the common bundle javascript files
+--%>
+<!--[if IE]>
+    <script charset='utf-8' src='<%=bundle.bundlePath()%>common/resources/js/html5shiv.js' type='text/javascript'></script>
+<![endif]-->
+<script type="text/javascript" src="<%=bundle.bundlePath()%>common/resources/js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="<%=bundle.bundlePath()%>common/resources/js/jquery-ui-1.9.0.custom.min.js"></script>
+<script type="text/javascript" src="<%=bundle.bundlePath()%>common/resources/js/ajaxLogin.js"></script>
