@@ -1178,6 +1178,7 @@ function addRecord(){
 	if (jsonCreated == false) {
 		alert("An error has ocurred attempting to save the record");
 		setStatusWAIT.hide();
+		return false;
 	};
 	var permission = KD.utils.Action.getQuestionValue("Data Type Access Permissions");
 	//alert("Permission: "+permission);
@@ -1311,6 +1312,7 @@ function updateRecord(){
 	if (jsonCreated == false) {
 		alert("An error has ocurred attempting to save the record");
 		setStatusWAIT.hide();
+		return false;
 	};
 	var permission = KD.utils.Action.getQuestionValue("Data Type Access Permissions");
 	var helperID = KD.utils.Action.getQuestionValue("Data Type Definition Request ID");

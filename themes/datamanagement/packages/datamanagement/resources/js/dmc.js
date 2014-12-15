@@ -25,16 +25,16 @@ function parseDataDefinition(dataDefinition) {
 	getData(bridgemodel,bridgequalification,bridgeattributes,bridgeorder,parameterdata,tablecolumns);
 }
 
-//function getData(bridgequalification,bridgeattributes,paramval1,paramval2,paramval3,tablecolumns) {
+
 function getData(bridgemodel,bridgequalification,bridgeattributes,bridgeorder,parameterdata,tablecolumns) {
 	$('#dmcTable').html( '<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"display\" id=\"dmcDataTable\"></table>' );
 	var dataArray=[];
 	var connector = new KD.bridges.BridgeConnector({templateId: clientManager.templateId});
-	
-	//connector.search('Data Management Console - Helper Data', bridgequalification, {
+	var connector2 = new KD.bridges.BridgeConnector({templateId: clientManager.templateId});
+	var editors=[];
+
 	connector.search(bridgemodel, bridgequalification, {
 	  attributes: bridgeattributes,
-	  //parameters: {'Index Field 1':paramval1,'Index Field 2':paramval2,'Index Field 3':paramval3},
 	  parameters: parameterdata,
 	  metadata: {"order": [bridgeorder]},
 	  success: function(list) {
@@ -47,12 +47,28 @@ function getData(bridgemodel,bridgequalification,bridgeattributes,bridgeorder,pa
 			}
 			dataArray.push(currrecord);
 		}
-		populateTable(dataArray,tablecolumns);
-	  }
-	});
+		//get editors
+		  connector2.search("Data Management Console - Helper Data", "Index 1 | Index 2 | Index 3 (exact match/null)", {
+		  attributes: ["Character Field 1"],
+		  parameters: {"Index Field 1": "\"Data Management Console\"", "Index Field 2": "\"Configuration Menu Data\"", "Index Field 3": "\"Service Item Names for Editing Data\""},
+		  success: function(list2) {
+			for(var i=0;i<list2.records.length;i++) {
+				var currrecord2=[];
+				for(var j in list2.records[i].attributes) {
+				  if (list2.records[i].attributes.hasOwnProperty(j)){
+					currrecord2.push(list2.records[i].attributes[j]);
+				  }
+				}
+				editors.push(currrecord2);
+			}
+			populateTable(dataArray,tablecolumns, editors);
+		}
+	  })
+	}
+	})
 }
 
-function populateTable(dataArray,tablecolumns) {
+function populateTable(dataArray,tablecolumns, editors) {
 
     //Define the console table using the jquery dataTables plugin with the TableTools extra
 	//https://datatables.net & https://datatables.net/extras/tabletools/
@@ -68,7 +84,7 @@ function populateTable(dataArray,tablecolumns) {
 					"sExtends":    "text",
 					"sButtonText": "Add Row",
 					"fnClick": function( nButton, oConfig, oFlash ) {
-						if ( KD.utils.Action.getQuestionValue("Form Name") == "KS_SRV_Helper" || KD.utils.Action.getQuestionValue("Form Name") == "DMCDataDefinition") {
+						if ( $.inArray(KD.utils.Action.getQuestionValue("Form Name"), editors) && KD.utils.Action.getQuestionValue("Form Name") != "* None (adding entries is not available from the DMC)") {
 						//If the form used by this data type is KS_SRV_Helper, display the add/update service item for that form
 						//be sure to pass the request ID for the data type/data model and a type of add
 							window.open(KD.utils.ClientManager.webAppContextPath + '/DisplayPage?name='+KD.utils.Action.getQuestionValue("Form Name")
@@ -113,7 +129,7 @@ function populateTable(dataArray,tablecolumns) {
 							//Update can only be performed on one row at a time, so if the number of rows selected is greater than 1, display an error
 							alert("Please select only one row to update");
 						} else {
-							if ( KD.utils.Action.getQuestionValue("Form Name") == "KS_SRV_Helper" || KD.utils.Action.getQuestionValue("Form Name") == "DMCDataDefinition") {
+							if ( $.inArray(KD.utils.Action.getQuestionValue("Form Name"), editors) && KD.utils.Action.getQuestionValue("Form Name") != "* None (adding entries is not available from the DMC)") {
 							//If the form used by this data type is KS_SRV_Helper, display the add/update service item for that form
 							//be sure to pass the request ID for the data type/data model, the request ID of the row selected, and a type of update
 								window.open(KD.utils.ClientManager.webAppContextPath + '/DisplayPage?name='+KD.utils.Action.getQuestionValue("Form Name")
