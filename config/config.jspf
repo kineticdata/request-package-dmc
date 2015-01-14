@@ -1,0 +1,9 @@
+<%--
+    Notification Package config
+    NOTE: This file is required.
+--%>
+<%
+    // Define url to package page
+    bundle.setProperty("basePackageUrl", bundle.getProperty("displayPageUrlSlug") + "notificationsPackage");
+
+%>

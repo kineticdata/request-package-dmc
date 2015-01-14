@@ -1,0 +1,33 @@
+{
+    "package": "Notifications",
+    "languages": {
+      "en_US" : "English"
+    },
+    "views": {
+        "default": {
+            "content": "interface/views/package/package.jsp",
+            "title": "Notifications"
+        }
+    },
+    "callbacks": {
+        "createNotification": {
+            "content": "interface/callbacks/package/createNotification.jsp"
+        },
+		"updateNotification": {
+            "content": "interface/callbacks/package/updateNotification.jsp"
+        },
+		"updateHelperStatus": {
+            "content": "interface/callbacks/package/updateHelperStatus.jsp"
+        }
+    },
+    "links": {
+        "notificationsPackage": {
+            "type": "main-menu",
+            "label": "Notifications",
+            "class": "package",
+            "description": "Notifications - used to create and send notifications",
+            "icon": "<i class=\"fa fa-envelope-o\"></i>",
+            "displayName": "PackageNotifications"
+        }
+    }
+}
