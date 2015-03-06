@@ -151,24 +151,21 @@ function displayDataSetMenu(q1, q2, q3) {
 		});
 }
 
-function removeDuplicates(testArray) {
-    var tempArray = new Array();
-    tempArray[0]=testArray[0];
-    for(var i=0;i<testArray.length;i++)
-    {
-        var flag = true;
-        for(var j=0;j<tempArray.length;j++)
-        {
-            if(tempArray[j][0]==testArray[i][0])
-            {
-                flag = false;
+ function removeDuplicates(arr) {
+        newArr = new Array();
+        for (i = 0; i < arr.length; i++) {
+            if (!duplValuescheck(newArr, arr[i])) {
+                newArr.length += 1;
+                newArr[newArr.length - 1] = arr[i];
             }
-        }//for loop
-        if(flag==true)
-        tempArray.push(testArray[i]);
-    }//for loop    
-    return tempArray;
-}
+        }
+        return newArr;
+    }
+
+    function duplValuescheck(arr, e) {
+        for (j = 0; j < arr.length; j++) if (arr[j] == e) return true;
+        return false;
+    }
 
 function getDatasetDetails(dataType) {
 
