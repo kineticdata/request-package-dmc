@@ -1,3 +1,200 @@
+
+function displayDMCMenus() {
+	//clear initial menus
+	var q1 = KD.utils.Util.getAnswerLayer("Qualification 1");
+	var q2 = KD.utils.Util.getAnswerLayer("Qualification 2");
+	var q3 = KD.utils.Util.getAnswerLayer("Qualification 3");
+	var dataSets = KD.utils.Util.getAnswerLayer("Data Types");
+	q1.firstChild.length = 0;
+	q2.firstChild.length = 0;
+	q3.firstChild.length = 0;
+	dataSets.firstChild.length = 0;
+	
+	//get menus
+	// Submit values to the Model
+	$.ajax({
+           url: BUNDLE.packagePath + 'interface/callbacks/getQualMenus.jsp',
+           type: "POST",
+           contentType: 'application/json',
+           data: {},
+           success : function(data, textStatus, jqXHR) {
+            //clear the returns off the data returned
+			var menuData = data.trim().split(";;");
+			var q1Menu = removeDuplicates(menuData[0].split("::"));
+			var dataTypesMenu = removeDuplicates(menuData[3].split("::"));
+			
+			//Populate Q1 Menu
+			for (var i = 0; i < q1Menu.length; i++) {
+				q1.firstChild.options[i] = new Option(q1Menu[i],q1Menu[i]);
+			}		
+
+			//Populate dataTypesMenu Menu
+			for (var i = 0; i < dataTypesMenu.length; i++) {
+				dataSets.firstChild.options[i] = new Option(dataTypesMenu[i],dataTypesMenu[i]);
+			}	
+			setDataTypes(getParameter("dataType"));
+           },
+			error: function(jqXHR, textStatus, errorThrown) {
+				alert("An error has occurred attempting to load dataset menus. Please contact your system administrator if this persists.");
+			
+			}
+		});
+	
+
+}
+
+function displayLevel2Menu(q1) {
+	//clear initial menus
+	var q2 = KD.utils.Util.getAnswerLayer("Qualification 2");
+	var q3 = KD.utils.Util.getAnswerLayer("Qualification 3");
+	var dataSets = KD.utils.Util.getAnswerLayer("Data Types");
+	q2.firstChild.length = 0;
+	q3.firstChild.length = 0;
+	dataSets.firstChild.length = 0;
+	
+	//get user's permission groups
+	// Submit values to the Model
+	$.ajax({
+           url: BUNDLE.packagePath + 'interface/callbacks/getQualMenus.jsp?Level1='+q1,
+           type: "POST",
+           contentType: 'application/json',
+           data: { },
+           success : function(data, textStatus, jqXHR) {
+            //clear the returns off the data returned
+			var menuData = data.trim().split(";;");
+			var q2Menu = removeDuplicates(menuData[1].split("::"));
+			var q3Menu = removeDuplicates(menuData[2].split("::"));
+			var dataTypesMenu = removeDuplicates(menuData[3].split("::"));
+			
+			if (q1 != "") {
+				for (var i = 0; i < q2Menu.length; i++) {
+					q2.firstChild.options[i] = new Option(q2Menu[i],q2Menu[i]);
+				}	
+				
+				for (var i = 0; i < q3Menu.length; i++) {
+					q3.firstChild.options[i] = new Option(q3Menu[i],q3Menu[i]);
+				}	
+			}
+		
+			for (var i = 0; i < dataTypesMenu.length; i++) {
+				dataSets.firstChild.options[i] = new Option(dataTypesMenu[i],dataTypesMenu[i]);
+			}				
+          },
+			error: function(jqXHR, textStatus, errorThrown) {
+				alert("An error has occurred attempting to load dataset menus. Please contact your system administrator if this persists.");
+			}
+		});
+}
+
+function displayLevel3Menu(q1, q2) {
+	//clear initial menus
+	var q3 = KD.utils.Util.getAnswerLayer("Qualification 3");
+	var dataSets = KD.utils.Util.getAnswerLayer("Data Types");
+	q3.firstChild.length = 0;
+	dataSets.firstChild.length = 0;
+	
+	// Submit values to the Model
+	$.ajax({
+           url: BUNDLE.packagePath + 'interface/callbacks/getQualMenus.jsp?Level1='+q1+'&Level2='+q2,
+           type: "POST",
+           contentType: 'application/json',
+           data: { },
+           success : function(data, textStatus, jqXHR) {
+            //clear the returns off the data returned
+			var menuData = data.trim().split(";;");
+			var q3Menu = removeDuplicates(menuData[2].split("::"));
+			var dataTypesMenu = removeDuplicates(menuData[3].split("::"));
+			
+			if (q2 != "" && q1 != "" ) {
+				
+				for (var i = 0; i < q3Menu.length; i++) {
+					q3.firstChild.options[i] = new Option(q3Menu[i],q3Menu[i]);
+				}	
+			}
+
+			for (var i = 0; i < dataTypesMenu.length; i++) {
+				dataSets.firstChild.options[i] = new Option(dataTypesMenu[i],dataTypesMenu[i]);
+			}	
+           },
+			error: function(jqXHR, textStatus, errorThrown) {
+				alert("An error has occurred attempting to load dataset menus. Please contact your system administrator if this persists.");
+			}
+		});
+	
+
+}
+
+function displayDataSetMenu(q1, q2, q3) {
+	//clear initial menus
+	var dataSets = KD.utils.Util.getAnswerLayer("Data Types");
+	dataSets.firstChild.length = 0;
+	
+	//get user's permission groups
+	// Submit values to the Model
+	$.ajax({
+           url: BUNDLE.packagePath + 'interface/callbacks/getQualMenus.jsp?Level1='+q1+'&Level2='+q2+'&Level3='+q3,
+           type: "POST",
+           contentType: 'application/json',
+           data: { },
+           success : function(data, textStatus, jqXHR) {
+				//clear the returns off the data returned
+				var menuData = data.trim().split(";;");
+				var dataTypesMenu = removeDuplicates(menuData[3].split("::"));
+			
+				for (var i = 0; i < dataTypesMenu.length; i++) {
+					dataSets.firstChild.options[i] = new Option(dataTypesMenu[i],dataTypesMenu[i]);
+				}	
+               },
+			error: function(jqXHR, textStatus, errorThrown) {
+				alert("An error has occurred attempting to load dataset menus. Please contact your system administrator if this persists.");
+			}
+		});
+}
+
+function removeDuplicates(testArray) {
+    var tempArray = new Array();
+    tempArray[0]=testArray[0];
+    for(var i=0;i<testArray.length;i++)
+    {
+        var flag = true;
+        for(var j=0;j<tempArray.length;j++)
+        {
+            if(tempArray[j][0]==testArray[i][0])
+            {
+                flag = false;
+            }
+        }//for loop
+        if(flag==true)
+        tempArray.push(testArray[i]);
+    }//for loop    
+    return tempArray;
+}
+
+function getDatasetDetails(dataType) {
+
+	//get the details of the dataset
+	// Submit values to the Model
+	$.ajax({
+           url: BUNDLE.packagePath + 'interface/callbacks/getDataSetDetails.jsp?DataType='+dataType,
+           type: "POST",
+           contentType: 'application/json',
+           data: { },
+           success : function(data, textStatus, jqXHR) {
+				//Process the data returned
+				var menuData = data.trim().split(";;;");
+				if (menuData[0] != "No Permission") {
+					KD.utils.Action.setQuestionValue('Data Model ID', menuData[0]);
+					KD.utils.Action.setQuestionValue('Data Definition', menuData[1]);
+					var dataDefElem = KD.utils.Util.getQuestionInput('Data Definition');
+					KD.utils.Action._fireChange(dataDefElem);	
+				}
+               },
+			error: function(jqXHR, textStatus, errorThrown) {
+				alert("An error has occurred attempting to load dataset details. Please contact your system administrator if this persists.");
+			}
+		});	
+}
+
 function parseDataDefinition(dataDefinition) {
 	//parse the datadefinition, which should be stored in properly formatted JSON
 	var myJson=JSON.parse(dataDefinition);
@@ -21,7 +218,6 @@ function parseDataDefinition(dataDefinition) {
 	//but there can be more.
 	var tablecolumns=myJson.tableconfig.columndata;
 
-	//getData(bridgequalification,bridgeattributes,paramval1,paramval2,paramval3,tablecolumns);
 	getData(bridgemodel,bridgequalification,bridgeattributes,bridgeorder,parameterdata,tablecolumns);
 }
 
@@ -231,5 +427,5 @@ function setDataTypes(dataType) {
     dataType =  decodeURIComponent(dataType);
 	KD.utils.Action.setQuestionValue('Data Types', dataType);
 	var dataTypeElem = KD.utils.Util.getQuestionInput('Data Types');
-	KD.utils.Action._fireChange(dataTypeElem);
+	KD.utils.Action._fireChange(dataTypeElem);				                   
 }
