@@ -1,3 +1,4 @@
+<%@page import="java.text.*"%>
 <%!
     public static class Helper {
         public static final String FORM_NAME = "KS_SRV_Helper";
@@ -116,6 +117,8 @@
             String disp_3, String disp_4, String disp_5, String disp_6, String int_1, String int_2, String int_3, String int_4, String int_5, 
             String int_6, String index_1, String index_2, String index_3, String survey_instance_id, String customer_survey_instance_id, 
 			String permission, String status) {
+			
+			//System.out.println("TEMP DEBUGGING helper.jspf :: " + t_dtime_1.toString());
             
             SimpleEntry entrySave = new SimpleEntry();
             entrySave.setSchemaName(FORM_NAME);
@@ -141,14 +144,13 @@
             entrySave.setEntryFieldValue(FIELD_DATE_5, date_5);
             entrySave.setEntryFieldValue(FIELD_DATE_6, date_6);
             entrySave.setEntryFieldValue(FIELD_DATE_7, date_7);
-            entrySave.setEntryFieldValue(FIELD_DTIME_1, dtime_1);
-            entrySave.setEntryFieldValue(FIELD_DTIME_2, dtime_2);
-            entrySave.setEntryFieldValue(FIELD_DTIME_3, dtime_3);
-            entrySave.setEntryFieldValue(FIELD_DTIME_4, dtime_4);
-            entrySave.setEntryFieldValue(FIELD_DTIME_5, dtime_5);
-            entrySave.setEntryFieldValue(FIELD_DTIME_6, dtime_6);
-            entrySave.setEntryFieldValue(FIELD_DTIME_7, dtime_7);
-            entrySave.setEntryFieldValue(FIELD_TIME_1, time_1);
+            entrySave.setEntryFieldValue(FIELD_DTIME_1, convertDate(dtime_1));
+            entrySave.setEntryFieldValue(FIELD_DTIME_2, convertDate(dtime_2));
+            entrySave.setEntryFieldValue(FIELD_DTIME_3, convertDate(dtime_3));
+            entrySave.setEntryFieldValue(FIELD_DTIME_4, convertDate(dtime_4));
+            entrySave.setEntryFieldValue(FIELD_DTIME_5, convertDate(dtime_5));
+            entrySave.setEntryFieldValue(FIELD_DTIME_6, convertDate(dtime_6));
+            entrySave.setEntryFieldValue(FIELD_DTIME_7, convertDate(dtime_7));
             entrySave.setEntryFieldValue(FIELD_TIME_2, time_2);
             entrySave.setEntryFieldValue(FIELD_TIME_3, time_3);
             entrySave.setEntryFieldValue(FIELD_TIME_4, time_4);
@@ -175,7 +177,6 @@
 			entrySave.setEntryFieldValue(FIELD_PERMISSION, permission);
 			entrySave.setEntryFieldValue(FIELD_STATUS, status);  
 	
-			System.out.println("Permission: "+permission);
             // Build the helper
             ArsHelper helper = null;
             try {
@@ -227,13 +228,13 @@
             entrySave.setEntryFieldValue(FIELD_DATE_5, date_5);
             entrySave.setEntryFieldValue(FIELD_DATE_6, date_6);
             entrySave.setEntryFieldValue(FIELD_DATE_7, date_7);
-            entrySave.setEntryFieldValue(FIELD_DTIME_1, dtime_1);
-            entrySave.setEntryFieldValue(FIELD_DTIME_2, dtime_2);
-            entrySave.setEntryFieldValue(FIELD_DTIME_3, dtime_3);
-            entrySave.setEntryFieldValue(FIELD_DTIME_4, dtime_4);
-            entrySave.setEntryFieldValue(FIELD_DTIME_5, dtime_5);
-            entrySave.setEntryFieldValue(FIELD_DTIME_6, dtime_6);
-            entrySave.setEntryFieldValue(FIELD_DTIME_7, dtime_7);
+            entrySave.setEntryFieldValue(FIELD_DTIME_1, convertDate(dtime_1));
+            entrySave.setEntryFieldValue(FIELD_DTIME_2, convertDate(dtime_2));
+            entrySave.setEntryFieldValue(FIELD_DTIME_3, convertDate(dtime_3));
+            entrySave.setEntryFieldValue(FIELD_DTIME_4, convertDate(dtime_4));
+            entrySave.setEntryFieldValue(FIELD_DTIME_5, convertDate(dtime_5));
+            entrySave.setEntryFieldValue(FIELD_DTIME_6, convertDate(dtime_6));
+            entrySave.setEntryFieldValue(FIELD_DTIME_7, convertDate(dtime_7));
             entrySave.setEntryFieldValue(FIELD_TIME_1, time_1);
             entrySave.setEntryFieldValue(FIELD_TIME_2, time_2);
             entrySave.setEntryFieldValue(FIELD_TIME_3, time_3);
@@ -337,6 +338,44 @@
             return updatedRecordId;
         }
 
+       
+        private static String convertDate(String dtime) {
+            if (dtime!=null && !dtime.equals("")) {
+                //Establish a date/time input format
+                DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z' z");
+                //System.out.println(dtime);
+                dtime = dtime + " UTC";
+                //System.out.println(dtime);
+                
+                //Convert ISO format to a date object in Java.  Force it to UTC.
+                Date date = null;
+                try {
+                  date = df1.parse(dtime);
+                } catch (Exception e) {
+                    System.out.println("Unable to parse date stamp: " + dtime);
+                    throw new RuntimeException(e);
+                }
+                
+                //Establish a calendar object for the server timezone
+                Calendar c = java.util.Calendar.getInstance();
+                
+                //set the calendar object's time to the date object
+                c.setTime(date);
+                
+                //extract the sections we need
+                int year = c.get(Calendar.YEAR);
+                int month = c.get(Calendar.MONTH)+1;
+                int day = c.get(Calendar.DAY_OF_MONTH);
+                int hour = c.get(Calendar.HOUR_OF_DAY);
+                int minute = c.get(Calendar.MINUTE);
+                int second = c.get(Calendar.SECOND);
+                
+                //assign new value to variable.
+                dtime = Integer.toString(month) + "/" + Integer.toString(day) + "/" + Integer.toString(year) + " " + Integer.toString(hour) + ":" + Integer.toString(minute) + ":" + Integer.toString(second);
+            } 
+            return dtime;
+        }		
+
 
         private SimpleEntry entry = null;
 
@@ -345,5 +384,10 @@
         }
 
         public String getRequestID() {return entry.getEntryFieldValue(FIELD_REQUEST_ID);}
+		public String getCharacterField1() {return entry.getEntryFieldValue(FIELD_CHAR_1);}
+		public String getCharacterField10() {return entry.getEntryFieldValue(FIELD_CHAR_10);}
+		public String getCharacterField11() {return entry.getEntryFieldValue(FIELD_CHAR_11);}
+		public String getCharacterField12() {return entry.getEntryFieldValue(FIELD_CHAR_12);}
+		public String getCharacterField13() {return entry.getEntryFieldValue(FIELD_CHAR_13);}
     }
 %>
