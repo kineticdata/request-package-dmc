@@ -1,33 +1,43 @@
 {
-    "package": "Notifications",
+    "package": "Data Management Console",
     "languages": {
       "en_US" : "English"
     },
     "views": {
         "default": {
-            "content": "interface/views/package/package.jsp",
-            "title": "Notifications"
+            "content": "interface/views/package/dmc.jsp",
+            "title": "Data Management Console"
+        },
+		"datatypedef": {
+            "content": "interface/views/package/datatypedef.jsp",
+            "title": "Add Data Set"
         }
     },
     "callbacks": {
-        "createNotification": {
-            "content": "interface/callbacks/package/createNotification.jsp"
+        "createHelper": {
+            "content": "interface/callbacks/package/createHelper.jsp"
         },
-		"updateNotification": {
-            "content": "interface/callbacks/package/updateNotification.jsp"
+		"updateHelper": {
+            "content": "interface/callbacks/package/updateHelper.jsp"
         },
 		"updateHelperStatus": {
             "content": "interface/callbacks/package/updateHelperStatus.jsp"
+        },
+		"getDataSetDetails": {
+            "content": "interface/callbacks/package/getDataSetDetails.jsp"
+        },
+		"getQualMenus": {
+            "content": "interface/callbacks/package/getQualMenus.jsp"
         }
     },
     "links": {
-        "notificationsPackage": {
+        "dmcPackage": {
             "type": "main-menu",
-            "label": "Notifications",
+            "label": "Data Management Console",
             "class": "package",
-            "description": "Notifications - used to create and send notifications",
-            "icon": "<i class=\"fa fa-envelope-o\"></i>",
-            "displayName": "PackageNotifications"
+            "description": "DMC - Used to Manage Data",
+            "icon": "<i class=\"fa fa-cubes\"></i>",
+            "displayName": "PackageDataManagementConsole"
         }
     }
 }
