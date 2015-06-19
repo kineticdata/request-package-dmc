@@ -315,6 +315,19 @@ function processTimeForUrl(time) {
 	return time_s; 
 }
 
+function processDateForUrl(DateValue) {
+	//Remedy stores data in seconds since 12:00:00 AM Jan 1 1970 (Julian)
+	//Take a sting like YYYY-MM-DD and turn it into Julian Date
+	//Start at 0
+	var dateSplit = DateValue.split("-");
+	var newDate = new Date();
+	newDate.setFullYear(dateSplit[0], dateSplit[1]-1, dateSplit[2]);
+	var julianDate = Math.floor((newDate.getTime() / 86400000) + 2440587.5);
+	
+	//return the calculated number of seconds
+	return julianDate; 
+}
+
 function processDateTimeForUrl(datetime) {
 	//Remedy wants date time data as mm/dd/yyyy HH:mm:ss
 	//but it comes from a date time question as YYYY-MM-ddTHH:mm:ssZ
@@ -451,7 +464,7 @@ function updateRecord(){
 	+ '&index_1=' + encodeURIComponent(index_1)  + '&index_2=' + encodeURIComponent(index_2) + '&index_3=' + encodeURIComponent(index_3) 
 	+ '&char_1=' + encodeURIComponent(char_1)  + '&char_2=' + encodeURIComponent(char_2) + '&char_3=' + encodeURIComponent(char_3) + '&char_4=' + encodeURIComponent(char_4) + '&char_5=' + encodeURIComponent(char_5) + '&char_6=' + encodeURIComponent(char_6) + '&char_7=' + encodeURIComponent(char_7) + '&char_8=' + encodeURIComponent(char_8) + '&char_9=' + encodeURIComponent(char_9) + '&char_10=' + encodeURIComponent(char_10) + '&char_11=' + encodeURIComponent(char_11) + '&char_12=' + encodeURIComponent(char_12) + '&char_13=' + encodeURIComponent(char_13) + '&char_14=' + encodeURIComponent(char_14) 
 	+ '&int_1=' + encodeURIComponent(int_1) + '&int_2=' + encodeURIComponent(int_2) + '&int_3=' + encodeURIComponent(int_3) + '&int_4=' + encodeURIComponent(int_4) + '&int_5=' + encodeURIComponent(int_5) + '&int_6=' + encodeURIComponent(int_6) 
-	+ '&date_1=' + encodeURIComponent(date_1) + '&date_2=' + encodeURIComponent(date_2) + '&date_3=' + encodeURIComponent(date_3) + '&date_4=' + encodeURIComponent(date_4) + '&date_5=' + encodeURIComponent(date_5) + '&date_6=' + encodeURIComponent(date_6) + '&date_7=' + encodeURIComponent(date_7)
+	+ '&date_1=' + encodeURIComponent(processDateForUrl(date_1)) + '&date_2=' + encodeURIComponent(processDateForUrl(date_2)) + '&date_3=' + encodeURIComponent(processDateForUrl(date_3)) + '&date_4=' + encodeURIComponent(processDateForUrl(date_4)) + '&date_5=' + encodeURIComponent(processDateForUrl(date_5)) + '&date_6=' + encodeURIComponent(processDateForUrl(date_6)) + '&date_7=' + encodeURIComponent(processDateForUrl(date_7))
 	+ '&dtime_1=' + encodeURIComponent(processDateTimeForUrl(dtime_1)) + '&dtime_2=' + encodeURIComponent(processDateTimeForUrl(dtime_2)) + '&dtime_3=' + encodeURIComponent(processDateTimeForUrl(dtime_3)) + '&dtime_4=' + encodeURIComponent(processDateTimeForUrl(dtime_4)) + '&dtime_5=' + encodeURIComponent(processDateTimeForUrl(dtime_5)) + '&dtime_6=' + encodeURIComponent(processDateTimeForUrl(dtime_6)) + '&dtime_7=' + encodeURIComponent(processDateTimeForUrl(dtime_7));
 	//Times shouldn't be passed if they aren't populated or the record will populate with midnight (12:00:00 AM)
 	if (time_1 != null && time_1 != "") { updateRequestUrl = updateRequestUrl + '&time_1=' + encodeURIComponent(processTimeForUrl(time_1)); }
@@ -559,7 +572,7 @@ function addRecord(){
 	+ '&index_1=' + encodeURIComponent(index_1)  + '&index_2=' + encodeURIComponent(index_2) + '&index_3=' + encodeURIComponent(index_3) 
 	+ '&char_1=' + encodeURIComponent(char_1)  + '&char_2=' + encodeURIComponent(char_2) + '&char_3=' + encodeURIComponent(char_3) + '&char_4=' + encodeURIComponent(char_4) + '&char_5=' + encodeURIComponent(char_5) + '&char_6=' + encodeURIComponent(char_6) + '&char_7=' + encodeURIComponent(char_7) + '&char_8=' + encodeURIComponent(char_8) + '&char_9=' + encodeURIComponent(char_9) + '&char_10=' + encodeURIComponent(char_10) + '&char_11=' + encodeURIComponent(char_11) + '&char_12=' + encodeURIComponent(char_12) + '&char_13=' + encodeURIComponent(char_13) + '&char_14=' + encodeURIComponent(char_14) 
 	+ '&int_1=' + encodeURIComponent(int_1) + '&int_2=' + encodeURIComponent(int_2) + '&int_3=' + encodeURIComponent(int_3) + '&int_4=' + encodeURIComponent(int_4) + '&int_5=' + encodeURIComponent(int_5) + '&int_6=' + encodeURIComponent(int_6) 
-	+ '&date_1=' + encodeURIComponent(date_1) + '&date_2=' + encodeURIComponent(date_2) + '&date_3=' + encodeURIComponent(date_3) + '&date_4=' + encodeURIComponent(date_4) + '&date_5=' + encodeURIComponent(date_5) + '&date_6=' + encodeURIComponent(date_6) + '&date_7=' + encodeURIComponent(date_7)
+	+ '&date_1=' + encodeURIComponent(processDateForUrl(date_1)) + '&date_2=' + encodeURIComponent(processDateForUrl(date_2)) + '&date_3=' + encodeURIComponent(processDateForUrl(date_3)) + '&date_4=' + encodeURIComponent(processDateForUrl(date_4)) + '&date_5=' + encodeURIComponent(processDateForUrl(date_5)) + '&date_6=' + encodeURIComponent(processDateForUrl(date_6)) + '&date_7=' + encodeURIComponent(processDateForUrl(date_7))
 	+ '&dtime_1=' + encodeURIComponent(processDateTimeForUrl(dtime_1)) + '&dtime_2=' + encodeURIComponent(processDateTimeForUrl(dtime_2)) + '&dtime_3=' + encodeURIComponent(processDateTimeForUrl(dtime_3)) + '&dtime_4=' + encodeURIComponent(processDateTimeForUrl(dtime_4)) + '&dtime_5=' + encodeURIComponent(processDateTimeForUrl(dtime_5)) + '&dtime_6=' + encodeURIComponent(processDateTimeForUrl(dtime_6)) + '&dtime_7=' + encodeURIComponent(processDateTimeForUrl(dtime_7));
 	//Times shouldn't be passed if they aren't populated or the record will populate with midnight (12:00:00 AM)
 	if (time_1 != null && time_1 != "") { createRequestUrl = createRequestUrl + '&time_1=' + encodeURIComponent(processTimeForUrl(time_1)); }
