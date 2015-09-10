@@ -1,0 +1,7 @@
+The 5.2 service items are largely the same as the 5.1 service items. There are two main differences:
+1) the 5.2 Upload item provided uses a Task 4 tree. The item and the tree are provided because the tree will 
+   likely not import with the item successfully because your task server will be named something different 
+   than ours is. Once you import the service items, set the task server information at the catalog level, 
+   then import the tree. You should be good to go.
+2) The catalog will now have the task server information defined on it. You will need to update this to
+   match your task server information.
