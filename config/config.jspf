@@ -4,6 +4,6 @@
 --%>
 <%
     // Define url to package page
-    bundle.setProperty("basePackageUrl", bundle.getProperty("displayPageUrlSlug") + "notificationsPackage");
+    bundle.setProperty("basePackageUrl", bundle.getProperty("displayPageUrlSlug") + "datamanagement");
 
 %>

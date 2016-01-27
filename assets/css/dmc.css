@@ -6,5 +6,21 @@
 }
 */
 .questionAnswer {
-	margin-left: 206px;
+    position: relative;
+	margin-left: 250px;
+}
+
+.questionLabel {
+    float: left;
+    width: 250px;
+}
+
+.helpLink {
+float: right;
+
+}
+
+
+th.hideCol, td.hideCol {
+    display: none;
 }

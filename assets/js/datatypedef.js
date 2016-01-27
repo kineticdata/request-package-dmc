@@ -1151,7 +1151,7 @@ function validateDataDefTable() {
 function showConsole() {
     var dataType = "Data Management Console - Data Type Definitions";
 	//redirect to the console referencing the provided data type
-	window.open(KD.utils.ClientManager.webAppContextPath + '/DisplayPage?name=datamanagement&dataType='+encodeURIComponent(dataType), '_self');
+	window.open(KD.utils.ClientManager.webAppContextPath + '/DisplayPage?name='+BUNDLE.config.slug+'datamanagement&dataType='+encodeURIComponent(dataType), '_self');
 }
 
 function addRecord(){
@@ -1310,7 +1310,7 @@ function updateRecord(){
 	//get values necessary to pass here
 	var jsonCreated = createJSON();
 	if (jsonCreated == false) {
-		alert("An error has ocurred attempting to save the record");
+		alert("An error has occurred attempting to save the record");
 		setStatusWAIT.hide();
 		return false;
 	};

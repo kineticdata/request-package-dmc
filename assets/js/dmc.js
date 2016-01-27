@@ -270,7 +270,7 @@ function populateTable(dataArray,tablecolumns, editors) {
 		"bDestroy": true,
 		"sDom": 'T<"clear">lfrtip',
 		"oTableTools":{
-		   "sSwfPath":BUNDLE.relativePackagePath + "resources/js/DataTables-1.9.4/extras/TableTools/media/swf/copy_csv_xls_pdf.swf",
+		   "sSwfPath":BUNDLE.bundlePath + "/library/js/DataTables-1.9.4/extras/TableTools/media/swf/copy_csv_xls_pdf.swf",
 		   "sRowSelect": "multi",
 		   "aButtons": [
 				{
@@ -280,7 +280,7 @@ function populateTable(dataArray,tablecolumns, editors) {
 						if ( $.inArray(KD.utils.Action.getQuestionValue("Form Name"), editors) && KD.utils.Action.getQuestionValue("Form Name") != "* None (adding entries is not available from the DMC)") {
 						//If the form used by this data type is KS_SRV_Helper, display the add/update service item for that form
 						//be sure to pass the request ID for the data type/data model and a type of add
-							window.open(KD.utils.ClientManager.webAppContextPath + '/DisplayPage?name='+KD.utils.Action.getQuestionValue("Form Name")
+							window.open(KD.utils.ClientManager.webAppContextPath + '/DisplayPage?name='+BUNDLE.config.slug+KD.utils.Action.getQuestionValue("Form Name")
 							+'Row'
 							+'&dataModel='+KD.utils.Action.getQuestionValue("Data Model ID")
 							+'&type=add', '_self');
@@ -325,7 +325,7 @@ function populateTable(dataArray,tablecolumns, editors) {
 							if ( $.inArray(KD.utils.Action.getQuestionValue("Form Name"), editors) && KD.utils.Action.getQuestionValue("Form Name") != "* None (adding entries is not available from the DMC)") {
 							//If the form used by this data type is KS_SRV_Helper, display the add/update service item for that form
 							//be sure to pass the request ID for the data type/data model, the request ID of the row selected, and a type of update
-								window.open(KD.utils.ClientManager.webAppContextPath + '/DisplayPage?name='+KD.utils.Action.getQuestionValue("Form Name")
+								window.open(KD.utils.ClientManager.webAppContextPath + '/DisplayPage?name='+BUNDLE.config.slug+KD.utils.Action.getQuestionValue("Form Name")
 								+'Row&helperId='+rows[0][0]
 								+'&dataModel='+KD.utils.Action.getQuestionValue("Data Model ID")
 								+'&type=update', '_self');
@@ -342,7 +342,7 @@ function populateTable(dataArray,tablecolumns, editors) {
 						if ( KD.utils.Action.getQuestionValue("Form Name") == "KS_SRV_Helper" || KD.utils.Action.getQuestionValue("Form Name") == "DMCDataDefinition" ) {
 						//If the form used by this data type is KS_SRV_Helper, open the file upload service item
 						//be sure to pass the request ID for the data type/data model, the request ID of the row selected, and a type of update
-							window.open(KD.utils.ClientManager.webAppContextPath + '/DisplayPage?name=DMCFileUpload'
+							window.open(KD.utils.ClientManager.webAppContextPath + '/DisplayPage?name='+BUNDLE.config.slug+'DMCFileUpload'
 							+'&dataModel='+KD.utils.Action.getQuestionValue("Data Model ID"), '_self');
 						} else {
 							alert("This form does not currently support file uploads. Please contact your administrator if you require this functionality.");
@@ -379,12 +379,12 @@ function toggleHelperStatus(rows) {
 		success = function (o) {
 			if (i == (rows.length-1)) {
 				//redisplay console after success if this is the last row udpated
-				window.open(KD.utils.ClientManager.webAppContextPath + '/DisplayPage?name=datamanagement&dataType='+encodeURIComponent(KD.utils.Action.getQuestionValue("Data Types")), '_self');
+				window.open(KD.utils.ClientManager.webAppContextPath + '/DisplayPage?name='+BUNDLE.config.slug+'datamanagement&dataType='+encodeURIComponent(KD.utils.Action.getQuestionValue("Data Types")), '_self');
 			}
 		};
 
 		failure = function (o) {
-			alert("An error has ocurred attempting to save the record");
+			alert("An error has occurred attempting to save the record");
 		};
 		//create connection
 		connection = new KD.utils.Callback(success, failure, []);

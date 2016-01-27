@@ -24,7 +24,7 @@ function loadAddUpdate() {
 	} else {
 		//redirect to the console if an inadequate url was provided
 		alert("A Data Model was not provided. You will be redirected");
-		window.open(KD.utils.ClientManager.webAppContextPath + '/DisplayPage?name=datamanagement', '_self');
+		window.open(KD.utils.ClientManager.webAppContextPath + '/DisplayPage?name='+BUNDLE.config.slug+'datamanagement', '_self');
 	
 	}
 

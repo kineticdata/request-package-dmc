@@ -40,7 +40,7 @@ function loadAddUpdate() {
 				} else {
 					//redirect to the console if an inadiquate url was provided
 					alert("Entry type not provided (add/update). You will be redirected");
-					window.open(KD.utils.ClientManager.webAppContextPath + '/DisplayPage?name=datamanagement', '_self');
+					window.open(KD.utils.ClientManager.webAppContextPath + '/DisplayPage?name='+BUNDLE.config.slug+'datamanagement', '_self');
 				}
 		
 		  }
@@ -49,7 +49,7 @@ function loadAddUpdate() {
 	} else {
 		//redirect to the console if an inadequate url was provided
 		alert("A Data Model was not provided. You will be redirected");
-		window.open(KD.utils.ClientManager.webAppContextPath + '/DisplayPage?name=datamanagement', '_self');
+		window.open(KD.utils.ClientManager.webAppContextPath + '/DisplayPage?name='+BUNDLE.config.slug+'datamanagement', '_self');
 	
 	}
 
@@ -368,7 +368,7 @@ function processTimeForDisplay(time) {
 
 function showConsole(dataType) {
 	//redirect to the console referencing the provided data type
-	window.open(KD.utils.ClientManager.webAppContextPath + '/DisplayPage?name=datamanagement&dataType='+encodeURIComponent(dataType), '_self');
+	window.open(KD.utils.ClientManager.webAppContextPath + '/DisplayPage?name='+BUNDLE.config.slug+'datamanagement&dataType='+encodeURIComponent(dataType), '_self');
 }
 
 function updateRecord(){

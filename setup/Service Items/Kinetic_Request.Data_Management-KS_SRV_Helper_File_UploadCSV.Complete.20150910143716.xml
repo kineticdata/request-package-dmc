@@ -1,0 +1,100 @@
+<tree schema_version="1.0">
+    <sourceName>Kinetic Request</sourceName>
+    <sourceGroup>Data Management > KS_SRV_Helper File Upload-CSV</sourceGroup>
+    <type>Tree</type>
+    <status>Active</status>
+    <taskTree builder_version="4.0.1" schema_version="1.0" version="">
+                <name>Complete</name>
+                <author/>
+                <notes/>
+                <lastID>4</lastID>
+                <request>
+                    <task definition_id="system_start_v1" id="start" name="Start" x="10" y="10">
+                        <version>1</version>
+                        <configured>true</configured>
+                        <defers>false</defers>
+                        <deferrable>false</deferrable>
+                        <visible>false</visible>
+                        <parameters/>
+                        <messages/>
+                        <dependents><task label="" type="Complete" value="">kinetic_request_submission_update_status_v1_1</task></dependents>
+                    </task>
+                <task definition_id="kinetic_request_submission_update_status_v1" id="kinetic_request_submission_update_status_v1_1" name="Update Status: In Progress" x="85" y="115">
+                  <version>1</version>
+                  <configured>true</configured>
+                  <defers>false</defers>
+                  <deferrable>false</deferrable>
+                  <visible>false</visible>
+                  <parameters>
+                    <parameter id="validation_status" label="Validation Status:" menu="" required="true" tooltip="The value the Validation Status field on the specified Kinetic Request submission record will be set to.">In Progress</parameter>
+                    <parameter id="submission_id" label="Submission Id:" menu="" required="true" tooltip="The instance id of the Kinetic Request submission to be updated.">&lt;%=@dataset['CustomerSurveyInstanceId']%&gt;</parameter>
+                </parameters><messages>
+                    <message type="Create"/>
+                    <message type="Update"/>
+                    <message type="Complete"/>
+                  </messages>
+                  <dependents><task label="" type="Complete" value="">kinetic_dmc_dataload_helper_v1_2</task></dependents>
+                </task><task definition_id="kinetic_dmc_dataload_helper_v1" id="kinetic_dmc_dataload_helper_v1_2" name="Process File" x="251" y="129">
+                  <version>1</version>
+                  <configured>true</configured>
+                  <defers>false</defers>
+                  <deferrable>false</deferrable>
+                  <visible>false</visible>
+                  <parameters>
+                    <parameter id="data_type" label="Data Type" menu="" required="true" tooltip="">&lt;%=@answers['Data Type']%&gt;</parameter>
+            		<parameter id="bridge_model" label="Bridge Model" menu="" required="true" tooltip="">&lt;%=@answers['Bridge Model']%&gt;</parameter>
+            		<parameter id="bridge_qualification" label="Bridge Qualification" menu="" required="true" tooltip="">&lt;%=@answers['Bridge Qualification']%&gt;</parameter>
+            		<parameter id="bridge_parameters" label="Bridge Parameters" menu="" required="true" tooltip="The parameter names and values used for this data type, in the format Parameter1Name::&quot;Value&quot;||Parameter2Name::&quot;Value&quot;">&lt;%=@answers['Bridge Parameters']%&gt;</parameter>
+            		<parameter id="bridge_attributes" label="Bridge Model Attributes" menu="" required="true" tooltip="Listing of bridge model attributes separated by double pipes (||)">&lt;%=@answers['Helper Fields']%&gt;</parameter>
+            		<parameter id="header_row" label="Has Header Row" menu="" required="true" tooltip="Does the CSV file include a header row (Options are 'Yes' or 'No')">&lt;%=@answers['File has a header row']%&gt;</parameter>
+            		<parameter id="csv_file" label="CSV File" menu="" required="true" tooltip="Menu label of the attachment field">CSV File</parameter>
+            		<parameter id="replace_existing_records" label="Replace existing records" menu="" required="true" tooltip="This field should evaluate to 'Yes' if you want any/all existing records within the data type to be set to Deleted.  Otherwise, enter 'No'.">&lt;%=@answers['Replace ALL existing records']%&gt;</parameter>
+                </parameters><messages>
+                    <message type="Create"/>
+                    <message type="Update"/>
+                    <message type="Complete"/>
+                  </messages>
+                  <dependents><task label="" type="Complete" value="">smtp_email_send_v1_3</task></dependents>
+                </task><task definition_id="smtp_email_send_v1" id="smtp_email_send_v1_3" name="Email User" x="416" y="130">
+                  <version>1</version>
+                  <configured>true</configured>
+                  <defers>false</defers>
+                  <deferrable>false</deferrable>
+                  <visible>false</visible>
+                  <parameters>
+                    <parameter id="from" label="From (email address)" menu="" required="true" tooltip="The email address of the simulated sender.">DataManagement-NoReply@FirstSolar.com</parameter>
+                    <parameter id="to" label="To (email address)" menu="" required="true" tooltip="The email address of the intended recipient.">&lt;%=@answers['Email address']%&gt;</parameter>
+                    <parameter id="subject" label="Subject" menu="" required="false" tooltip="The subject of the email.">Kinetic Request Data Management Console File Update Complete</parameter>
+                    <parameter id="htmlbody" label="HTML Body" menu="" required="false" tooltip="HTML representing the body of a rich email.">The file upload submitted for data set &lt;%=@answers['Data Type']%&gt; has been processed. &lt;br&gt;
+            &lt;br&gt;
+            &lt;b&gt;Result Status:&lt;/b&gt; &lt;%=@results['Process File']['Status']%&gt;&lt;br&gt;
+            &lt;b&gt;Results Message:&lt;/b&gt; &lt;%=@results['Process File']['Result Message']%&gt;</parameter>
+                    <parameter id="textbody" label="Alternate (text) Body" menu="" required="false" tooltip="A plaintext message that will be displayed if the recipient can't display multipart HTML emails.">The file upload submitted for data set &lt;%=@answers['Data Type']%&gt; has been processed. 
+            
+            
+            Result Status: &lt;%=@results['Process File']['Status']%&gt;
+            Results Message: &lt;%=@results['Process File']['Result Message']%&gt;</parameter>
+                </parameters><messages>
+                    <message type="Create"/>
+                    <message type="Update"/>
+                    <message type="Complete"/>
+                  </messages>
+                  <dependents><task label="" type="Complete" value="">kinetic_request_submission_close_v1_4</task></dependents>
+                </task><task definition_id="kinetic_request_submission_close_v1" id="kinetic_request_submission_close_v1_4" name="Update status: Completed" x="579" y="109">
+                  <version>1</version>
+                  <configured>true</configured>
+                  <defers>false</defers>
+                  <deferrable>false</deferrable>
+                  <visible>false</visible>
+                  <parameters>
+                    <parameter id="validation_status" label="Validation Status:" menu="" required="true" tooltip="The value the Validation Status field on the specified Kinetic Request submission record will be set to.">Completed</parameter>
+                    <parameter id="submission_id" label="Submission Id:" menu="" required="true" tooltip="The instance id of the Kinetic Request submission to be updated.">&lt;%=@dataset['CustomerSurveyInstanceId']%&gt;</parameter>
+                </parameters><messages>
+                    <message type="Create"/>
+                    <message type="Update"/>
+                    <message type="Complete"/>
+                  </messages>
+                  <dependents/>
+                </task></request>
+            </taskTree>
+</tree>

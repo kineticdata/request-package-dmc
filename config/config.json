@@ -31,13 +31,13 @@
         }
     },
     "links": {
-        "dmcPackage": {
+        "datamanagement": {
             "type": "main-menu",
             "label": "Data Management Console",
             "class": "package",
             "description": "DMC - Used to Manage Data",
             "icon": "<i class=\"fa fa-cubes\"></i>",
-            "displayName": "PackageDataManagementConsole"
+            "displayName": "datamanagement"
         }
     }
 }
