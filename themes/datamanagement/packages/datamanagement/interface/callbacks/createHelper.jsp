@@ -13,7 +13,6 @@ try {
 }
 
 %>
-
 <%@include file="../../framework/models/helper.jspf"%>
 <%
     String status = request.getParameter("status");
@@ -71,10 +70,11 @@ try {
 	String customer_survey_instance_id = request.getParameter("csrv");
 	String permission = request.getParameter("permission");
 	if ((permission == null) || ("".equals(permission))) permission = ";0;";
+	String newRecordId = "";
 	
 	try {
 	//Update the record. Error is thrown within this code if the create doesn't happen
-	String newRecordId = Helper.createHelper(defaultContext,  char_1,  char_2,  char_3,  char_4, 
+	newRecordId = Helper.createHelper(defaultContext,  char_1,  char_2,  char_3,  char_4, 
              char_5,  char_6,  char_7,  char_8,  char_9,  char_10,  char_11,  char_12, 
              char_13,  char_14,  date_1,  date_2,  date_3,  date_4,  date_5,  date_6, 
              date_7,  dtime_1,  dtime_2,  dtime_3,  dtime_4,  dtime_5,  dtime_6,  dtime_7, 
@@ -85,4 +85,4 @@ try {
     // Handle exception
     throw new RuntimeException(e);
 }
- %>
+ %><%=newRecordId%>

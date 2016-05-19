@@ -38,6 +38,7 @@ function loadAddUpdate() {
 	} else if (type == "update") {
 		var helperId = getParameter("helperId");
 		KD.utils.Action.insertElement("Update Button");
+		KD.utils.Action.insertElement("Clone Button");
 		loadUpdate(helperId);
 	} 
 
@@ -1421,4 +1422,143 @@ function updateRecord(){
 	})
 
 	return updateRecordResult;
+}
+
+
+function cloneRecord(){
+    var newName = KD.utils.Action.getQuestionValue("Clone Data Type Name");
+	if (newName == "" || newName == null) {
+		alert("A name for the new dataset is required");
+		return false;
+	}
+	//Display wait pop-up
+	setStatusWAIT =
+		new YAHOO.widget.Panel("wait", {
+			width: "340px",
+			fixedcenter: true,
+			close: false,
+			draggable: true,
+			zindex: 4,
+			modal: true,
+			visible: false
+		});
+
+	setStatusWAIT.setHeader("Saving new Record");
+	setStatusWAIT.setBody("<img src='http://l.yimg.com/a/i/us/per/gr/gp/rel_interstitial_loading.gif' />");
+	setStatusWAIT.render(document.body);
+
+	setStatusWAIT.show();
+
+	//get values necessary to pass here
+	var jsonCreated = createJSON();
+	if (jsonCreated == false) {
+		alert("An error has ocurred attempting to save the record");
+		setStatusWAIT.hide();
+		return false;
+	};
+	var permission = KD.utils.Action.getQuestionValue("Data Type Access Permissions");
+	var index_1 = "Data Management Console";
+	var index_2 = "Data Definition";
+	var index_3 = "";
+	var char_1 = KD.utils.Action.getQuestionValue("Clone Data Type Name");
+	var char_2 = ""; 
+	var char_3 = "";
+	var char_4 = "";
+	var char_5 = "";
+	var char_6 = "";
+	var char_7 = "";
+	var char_8 = "";
+	var char_9 = "";
+	var char_10 = KD.utils.Action.getQuestionValue("Category Level 1");
+	var char_11 = KD.utils.Action.getQuestionValue("Category Level 2");
+	var char_12 = KD.utils.Action.getQuestionValue("Category Level 3");
+	var char_13 = KD.utils.Action.getQuestionValue("Data Type Definition JSON");
+	var char_14 = "";
+	var int_1 = "";
+	var int_2 = "";
+	var int_3 = "";
+	var int_4 = "";
+	var int_5 = "";
+	var int_6 = "";
+	var date_1 = "";
+	var date_2 = "";
+	var date_3 = "";
+	var date_4 = "";
+	var date_5 = "";
+	var date_6 = "";
+	var date_7 = "";
+	var dtime_1 = "";
+	var dtime_2 = "";
+	var dtime_3 = "";
+	var dtime_4 = "";
+	var dtime_5 = "";
+	var dtime_6 = "";
+	var dtime_7 = "";
+	var time_2 = null;
+	var time_3 = null;
+	var time_4 = null;
+	var time_5 = null;
+	var time_6 = null;
+	var time_7 = null;
+	var time_1 = null;
+	var status = KD.utils.Action.getQuestionValue("Status");
+
+	var cloneRecordResult = $.ajax({
+		type: "post",
+		url: BUNDLE.packagePath + "../datamanagement/interface/callbacks/createHelper.jsp",
+		cache: false,
+		data: {	
+				index_1: 	index_1,
+				index_2: 	index_2,
+				index_3:	index_3,
+				char_1:		char_1,
+				char_2:		char_2,
+				char_3:		char_3,
+				char_4:		char_4,
+				char_5:		char_5,
+				char_6:		char_6,
+				char_7:		char_7,
+				char_8:		char_8,
+				char_9:		char_9,
+				char_10:	char_10,
+				char_11:	char_11,
+				char_12:	char_12,
+				char_13:	char_13,
+				char_14:	char_14,
+				int_1:		int_1,
+				int_2:		int_2,
+				int_3:		int_3,
+				int_4:		int_4,
+				int_5:		int_5,
+				int_6:		int_6,
+				date_1:		date_1,
+				date_2:		date_2,
+				date_3:		date_3,
+				date_4:		date_4,
+				date_5:		date_5,
+				date_6:		date_6,
+				date_7:		date_7,
+				dtime_1:	dtime_1,
+				dtime_2:	dtime_2,
+				dtime_3:	dtime_3,
+				dtime_4:	dtime_4,
+				dtime_5:	dtime_5,
+				dtime_6:	dtime_6,
+				dtime_7:	dtime_7,
+				status:		status,
+				permission: permission
+				}
+	}).done(function(data, textStatus, jqXHR){
+		setStatusWAIT.hide();
+		window.open("/kinetic/DisplayPage?name=DMCDataDefinitionRow&helperId="+data.trim()+"&type=update", "_self");
+		//submit page
+		//Dom.getElementsByClassName('templateButton', 'input', KD.utils.Util.getElementObject("Submit"))[0].click();
+	}).fail(function( jqXHR, textStatus, errorThrown){
+		alert(jqXHR.status);
+        alert(errorThrown);
+		setStatusWAIT.hide();
+	})
+	
+	return cloneRecordResult;
+
 }
