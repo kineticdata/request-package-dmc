@@ -38,7 +38,7 @@ function loadAddUpdate() {
 	} else if (type == "update") {
 		var helperId = getParameter("helperId");
 		KD.utils.Action.insertElement("Update Button");
-		KD.utils.Action.insertElement("Clone Button");
+        KD.utils.Action.insertElement("Clone Button");
 		loadUpdate(helperId);
 	} 
 
@@ -785,184 +785,137 @@ function createJSON() {
 	var bridgedata = jsonBridgedata();
 	var tableconfig = jsonTableconfig();
 	var formconfig = jsonFormconfig();
-	var datatypestructure = '"datatypestructure":{';
-	datatypestructure += tableconfig.tablestructure;
-	if (bridgedata.parameterstructure && bridgedata.parameterstructure!=""){
-		datatypestructure += ("," + bridgedata.parameterstructure);
-	}
-	datatypestructure += '}';
-	
+	var datatypestructure = {
+        datatypestructure:{
+            tablestructure: tableconfig.tablestructure
+        }
+    };
+    
+    if (bridgedata.parameterstructure && bridgedata.parameterstructure!=""){
+        datatypestructure["datatypestructure"]["parameters"] = bridgedata.parameterstructure;
+    }
+    
 	//combine all parts
 	if (bridgedata && tableconfig && formconfig){
-		var jsonString = "{" + bridgedata.bridgedata + "," + datatypestructure + "," + tableconfig.tableconfig + "," + formconfig + "}"
+		var jsonString2 = {};
+        jQuery.extend(jsonString2, bridgedata.bridgedata);
+        jQuery.extend(jsonString2, datatypestructure);
+        jQuery.extend(jsonString2, tableconfig.tableconfig);
+        jQuery.extend(jsonString2, formconfig);
 	} else {
 		return false;
 	}
 	
 	//write to JSON question
-	KD.utils.Action.setQuestionValue('Data Type Definition JSON',jsonString);
-	
-	// Do all replacements when interpreting the JSON.  Otherwise, you can't open it up and parse it properly to display the user the values they need to type in.
-	// Can't do this here -- Need to do it when the JSON is stored, and "undoit" when the JSON is read to edit this.
-	// comma ==--> %2C
-	// Double Quotes ==-->%22
-	// Percent == -->%25
+	KD.utils.Action.setQuestionValue('Data Type Definition JSON',JSON.stringify(jsonString2));
 	
 	return true;
-	//if successful, send via model to helper because the JSON might be too large to fit in one 4000 character field.
-	/*if (type=='update'){
-		var updateRecordResult = updateRecord();
-	} else {
-		var addRecordResult = addRecord();
-	}
-	
-	if ((addRecordResult && addRecordResult==false) || (updateRecordResult && updateRecordResult==false)){
-		KD.utils.ClientManager.alertPanel(
-			{
-				header: "Error",
-				body: "There was an error saving this record.  Please try again.  If you continue to have problems, please check with your Administrator."
-			}
-		);
-		return false;
-	} else {
-		return true;
-	}*/
-	
-	//To Do:  When you open this for editing, get the JSON from Helper -- not the answer value and populate field by parsing/extracting all the data.
-	//        When you submit/save...should it modify the old record, or mark it inactive and replace it with a new one?  If doing the latter, it'll 
-	//        automatically create an audit trail.
 }
 
 function jsonBridgedata() {
-	var bridgedata = '"bridgedata":{';
-	bridgedata += '"bridgename":"' + KD.utils.Action.getQuestionValue('Bridge Model') + '"';
-	bridgedata += ',"qualification":"' + KD.utils.Action.getQuestionValue('Bridge Qualification') + '"';
-	
-	//set the metadata to sort by the unique ID
-	var sortattribute = '<%=attribute["' + KD.utils.Action.getQuestionValue('Unique ID Field') +'"]%>:ASC';
-	bridgedata += ', "order": "'+ encodeURIComponent(sortattribute)+'"';
-	
-	
+    var myObj = {};
+    myObj['bridgedata'] = {
+        bridgedata:{}
+    };
+    myObj['bridgedata']['bridgedata']['bridgename'] = KD.utils.Action.getQuestionValue('Bridge Model');
+    myObj['bridgedata']['bridgedata']['qualification'] = KD.utils.Action.getQuestionValue('Bridge Qualification');
+    myObj['bridgedata']['bridgedata']['order'] = '<%=attribute["' + KD.utils.Action.getQuestionValue('Unique ID Field') +'"]%>:ASC';
+		
 	//get attributes (all data source fields used)
 		var attr=[];
 		$('#dmcDataDefinitionTable tbody tr').find('.thSourcefield').each(function () {
-			attr.push('"'+$(this).text().replace(/"/g, '\\"')+'"');
+            attr.push($(this).text());
 		});
-	bridgedata += ',"attributes":[' + attr.join(",") + ']';
-	
+    myObj['bridgedata']['bridgedata']['attributes'] = attr;
 	
 	//add each parameter and value
 	if ($('#dmcBridgeParameterTable tbody tr').find('.thParametername').size()>0){
-		bridgedata += ',"parameters":{';
-		var parameterstructure = '"parameters":[';
+        var bridgeParams = {};
+        var parameterstructure = [];
 		$('#dmcBridgeParameterTable tbody tr').find('.thParametername').each(function () {
-			//do we need to worry about percent/wildcard values here?  Maybe we do this on the UI side => offer a 
-			//checkbox "Any non-null value" that converts to "%25"...or we have a separate columns for "processing value", 
-			//and store the encoded values there?
-			bridgedata += '"' + $(this).text().replace(/"/g, '\\"') + '":"' + $(this).closest('tr').find('.thParamvalue').text().replace(/"/g, '\\"') + '",';
-			parameterstructure += '["' + $(this).text().replace(/"/g, '\\"') + '","' + $(this).closest('tr').find('.thParamvalue').text().replace(/"/g, '\\"') + '"],';
+            bridgeParams[$(this).text()] = $(this).closest('tr').find('.thParamvalue').text()
+            parameterstructure.push([$(this).text(),$(this).closest('tr').find('.thParamvalue').text()]);
 		});
-		//remove last comma
-		bridgedata = bridgedata.slice(0,-1);
-		bridgedata += '}';
-		
-		parameterstructure = parameterstructure.slice(0,-1);
-		parameterstructure += ']';
+        myObj['bridgedata']['bridgedata']['parameters'] = bridgeParams;
+        myObj['parameterstructure'] = parameterstructure;
 	}
-	
-	//close the bridgedata section
-	bridgedata += "}";
-	
-	//return bridgedata;
-	
-	return {
-		bridgedata: bridgedata,
-		parameterstructure: parameterstructure
-	}
+
+    return myObj
 }
 
 function jsonTableconfig() {
-	//the spaces at end ensure a space between class names
-	var classHidden="hideCol ";
-	var classReqId="reqId ";
-	var classStatusCol="statusCol ";
+	var classHidden="hideCol",
+        classReqId="reqId",
+        classStatusCol="statusCol",
+        myObj = {
+            tableconfig: {
+                tableconfig: {},
+            }
+        },
+        columndata=[],
+        tablestructure=[];
 	
-	var tableconfig = '"tableconfig":{';
-	tableconfig += '"columndata":[';
-	var tablestructure = '"tablestructure":[';
 	$('#dmcDataDefinitionTable tbody tr').find('.thLabel').each(function(){
 		var thisRowData = oTable.fnGetData($(this).closest('tr').get(0));
+        var classes=[];
 
 		//identify any classes
-		var hidden=((thisRowData[4].toUpperCase()!="YES") ? classHidden : "");
-		var reqId=((thisRowData[0]=="Unique ID Column") ? classReqId : "");
-		var statusCol=((thisRowData[0]=="Status Column") ? classStatusCol : "");
+		if (thisRowData[4].toUpperCase()!="YES") classes.push(classHidden);
+		if (thisRowData[0]=="Unique ID Column") classes.push(classReqId);
+		if (thisRowData[0]=="Status Column") classes.push(classStatusCol);
 		
 		//add details
-		tableconfig += '{"sTitle":"' + $(this).text().replace(/"/g, '\\"') + '","sClass":"' + hidden + reqId + statusCol + '"},';
+        columndata.push(
+            {
+                "sTitle":$(this).text(),
+                "sClass":classes.join(" ")
+            }
+        )
 		
 		//assemble all row content
-		var thisRowJson = '[';
+        var thisRowJson = [];
 		for (var i=0;i<thisRowData.length;i++){		
 			//add details
-			thisRowJson += '"'+thisRowData[i].toString().replace(/"/g, '\\"')+'",';
+            thisRowJson.push(thisRowData[i].toString());
 		}
-		//remove the last comma
-		thisRowJson=thisRowJson.slice(0,-1);
-		
-		//close the row
-		thisRowJson += '],';
 		
 		//append to tablestructure
-		tablestructure += thisRowJson;
+        tablestructure.push(thisRowJson);
 		
 	})
-
-	//remove the last comma
-	tableconfig = tableconfig.slice(0,-1);
-	tablestructure=tablestructure.slice(0,-1);
-	
-	//close the columndata section
-	tableconfig += ']';
-	tablestructure += ']';
-	
-	//close the tableconfig section
-	tableconfig += '}';
-	
-	return {
-		tableconfig: tableconfig,
-		tablestructure: tablestructure
-	}
+    
+    myObj["tableconfig"]["tableconfig"]["columndata"] = columndata;
+    myObj["tablestructure"] = tablestructure;
+    
+	return myObj
 }
 
 function jsonFormconfig() {
-	var formconfig = '"formConfig":{';
-	formconfig += '"formName":"' + KD.utils.Action.getQuestionValue('Service Item for editing data') + '"';
-	formconfig += ',"fielddata":['
+    var formconfig = {
+          formConfig:{}
+        },
+        fielddata=[];
+	formconfig["formConfig"]["formName"] = KD.utils.Action.getQuestionValue('Service Item for editing data');
 	$('#dmcDataDefinitionTable tbody tr').find('.thSourcefield').each(function(){
 		var thisRowData = oTable.fnGetData($(this).closest('tr').get(0));
 		if (thisRowData[0]=="Data Columns"){
-			formconfig +=    '{"fieldName":"' + thisRowData[2].replace(/"/g, '\\"') + 
-							'","label":"' + thisRowData[3].replace(/"/g, '\\"') + 
-							'","type":"' + thisRowData[5] + 
-							'","menuOptions":"' + thisRowData[6].replace(/"/g, '\\"') + 
-							'","inputLength":"' + thisRowData[7] + 
-							'","defaultValue":"' + thisRowData[8].replace(/"/g, '\\"') + 
-							'","required":"' + thisRowData[9] + 
-							'","readonly":"' + thisRowData[10] + 
-							'","helpText":"' + thisRowData[11].replace(/"/g, '\\"') + '"},';
+            fielddata.push(
+                {
+                    fieldName: thisRowData[2],
+                    label: thisRowData[3],
+                    type: thisRowData[5],
+                    menuOptions: thisRowData[6],
+                    inputLength: thisRowData[7],
+                    defaultValue: thisRowData[8],
+                    required: thisRowData[9],
+                    readonly: thisRowData[10],
+                    helpText: thisRowData[11]
+                }
+            );
 		}
 	});
-	
-	//remove the last comma
-	formconfig = formconfig.slice(0,-1);
-	
-	//close the fielddata section
-	formconfig += ']';
-	
-	//close the formconfig section
-	formconfig += '}';
-	
+    formconfig["formConfig"]["fielddata"] = fielddata
+    
 	return formconfig;
 }
 
@@ -1179,7 +1132,7 @@ function addRecord(){
 	if (jsonCreated == false) {
 		alert("An error has ocurred attempting to save the record");
 		setStatusWAIT.hide();
-		return false;
+        return false;
 	};
 	var permission = KD.utils.Action.getQuestionValue("Data Type Access Permissions");
 	//alert("Permission: "+permission);
@@ -1313,7 +1266,7 @@ function updateRecord(){
 	if (jsonCreated == false) {
 		alert("An error has ocurred attempting to save the record");
 		setStatusWAIT.hide();
-		return false;
+        return false;
 	};
 	var permission = KD.utils.Action.getQuestionValue("Data Type Access Permissions");
 	var helperID = KD.utils.Action.getQuestionValue("Data Type Definition Request ID");
@@ -1423,7 +1376,6 @@ function updateRecord(){
 
 	return updateRecordResult;
 }
-
 
 function cloneRecord(){
     var newName = KD.utils.Action.getQuestionValue("Clone Data Type Name");
